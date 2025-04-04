@@ -7,15 +7,15 @@ import { CommonModule } from '@angular/common';
   imports: [FormsModule, CommonModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   private googleAiService = inject(GoogleAiService);
-  result: string = '';
-  ingredients: string = '';
-  restrictions: string = '';
-  loading: boolean = false;
-  error: string = '';
+  result = '';
+  ingredients = '';
+  restrictions = '';
+  loading = false;
+  error = '';
 
   async generateRecipe() {
     this.loading = true;
@@ -52,7 +52,6 @@ Restrictions: ${this.restrictions}
       const text = await this.googleAiService.generateContent(prompt);
       this.result = text;
       this.error = '';
-
     } catch (error) {
       console.error('Error generating text:', error);
       this.error = 'Error generating text: ' + error;

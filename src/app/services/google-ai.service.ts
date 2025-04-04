@@ -3,14 +3,21 @@ import { GenerativeModel, GoogleGenerativeAI } from '@google/generative-ai';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GoogleAiService {
-  private genAI = new GoogleGenerativeAI(environment.GOOGLE_GENERATIVE_AI_API_KEY);
+  private genAI = new GoogleGenerativeAI(
+    environment.GOOGLE_GENERATIVE_AI_API_KEY,
+  );
   private model: GenerativeModel;
 
   constructor() {
-    this.model = this.genAI.getGenerativeModel({ model: environment.GOOGLE_GENERATIVE_AI_MODEL });
+    this.model = this.genAI.getGenerativeModel({
+      model: environment.GOOGLE_GENERATIVE_AI_MODEL,
+      generationConfig: {
+        responseMimeType: 'application/json',
+      },
+    });
   }
 
   async generateContent(prompt: string): Promise<string> {
