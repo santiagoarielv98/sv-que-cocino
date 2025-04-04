@@ -3,6 +3,17 @@ import { FormsModule } from '@angular/forms';
 import { GoogleAiService } from './services/google-ai.service';
 import { CommonModule } from '@angular/common';
 
+interface Recipe {
+  title: string;
+  description: string;
+  servings: number;
+  prep_time_minutes: number;
+  cook_time_minutes: number;
+  ingredients: { name: string; quantity: string }[];
+  instructions: string[];
+  tags: string[];
+}
+
 @Component({
   imports: [FormsModule, CommonModule],
   selector: 'app-root',
@@ -11,7 +22,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   private googleAiService = inject(GoogleAiService);
-  result = '';
+  recipe: Recipe | null = null;
   ingredients = '';
   restrictions = '';
   loading = false;
@@ -50,12 +61,13 @@ Restrictions: ${this.restrictions}
 `;
     try {
       const text = await this.googleAiService.generateContent(prompt);
-      this.result = text;
+      this.recipe = JSON.parse(text) as Recipe;
+
       this.error = '';
     } catch (error) {
       console.error('Error generating text:', error);
       this.error = 'Error generating text: ' + error;
-      this.result = '';
+      this.recipe = null;
     } finally {
       this.loading = false;
     }

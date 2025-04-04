@@ -14,9 +14,22 @@
 
     <div *ngIf="loading" class="loading">Loading...</div>
     <div *ngIf="error" class="error">{{ error }}</div>
-
-    <div *ngIf="result" class="result">
+    <div *ngIf="recipe" class="result">
         <h2>Generated Recipe</h2>
-        <p>{{result}}</p>
+        <h3>{{ recipe.title }}</h3>
+        <p><strong>Ingredients:</strong></p>
+        <ul>
+            <li *ngFor="let ingredient of recipe.ingredients">
+                {{ ingredient.name }} - {{ ingredient.quantity }}
+            </li>
+        </ul>
+        <p><strong>Instructions:</strong></p>
+        <p>{{ recipe.instructions }}</p>
+        <p><strong>Servings:</strong> {{ recipe.servings }}</p>
+        <p><strong>Prep Time:</strong> {{ recipe.prep_time_minutes }} minutes</p>
+        <p><strong>Cook Time:</strong> {{ recipe.cook_time_minutes }} minutes</p>
+        <p><strong>Tags:</strong> {{ recipe.tags.join(', ') }}</p>
+        <p><strong>Description:</strong> {{ recipe.description }}</p>
+
     </div>
 </div>
