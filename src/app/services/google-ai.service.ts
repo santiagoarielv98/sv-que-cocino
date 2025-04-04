@@ -13,7 +13,7 @@ export class GoogleAiService {
     this.model = this.genAI.getGenerativeModel({ model: environment.GOOGLE_GENERATIVE_AI_MODEL });
   }
 
-  async generateText(prompt: string): Promise<string> {
+  async generateContent(prompt: string): Promise<string> {
     try {
       const result = await this.model.generateContent([prompt]);
       return result.response.text();
