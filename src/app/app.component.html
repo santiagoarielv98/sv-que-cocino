@@ -15,6 +15,9 @@
     <div *ngIf="loading" class="loading">Loading...</div>
     <div *ngIf="error" class="error">{{ error }}</div>
     <div *ngIf="recipe" class="result">
+        @if(recipe.image){
+        <img [src]="recipe.image" alt="Recipe Image" class="recipe-image">
+        }
         <h2>Generated Recipe</h2>
         <h3>{{ recipe.title }}</h3>
         <p><strong>Ingredients:</strong></p>
@@ -24,7 +27,12 @@
             </li>
         </ul>
         <p><strong>Instructions:</strong></p>
-        <p>{{ recipe.instructions }}</p>
+        <!-- <p>{{ recipe.instructions }}</p> -->
+        <ul>
+            <li *ngFor="let instruction of recipe.instructions">
+                {{ instruction }}
+            </li>
+        </ul>
         <p><strong>Servings:</strong> {{ recipe.servings }}</p>
         <p><strong>Prep Time:</strong> {{ recipe.prep_time_minutes }} minutes</p>
         <p><strong>Cook Time:</strong> {{ recipe.cook_time_minutes }} minutes</p>
