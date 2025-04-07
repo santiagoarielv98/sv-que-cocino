@@ -1,16 +1,20 @@
 <form (ngSubmit)="onSubmit()" #searchForm="ngForm">
-    <input type="text" [(ngModel)]="searchTerm" placeholder="Search..." [disabled]="isDisabled" />
+    <input type="text" name="searchTerm" [(ngModel)]="searchTerm" placeholder="Search..." [disabled]="isDisabled" />
     <button type="submit" [disabled]="isDisabled">Submit</button>
 </form>
 
 
+<button (click)="login()">
+    login with google
+</button>
+
 @if(recipes$ | async; as recipes) {
     @for(recipe of recipes; track recipe.id) {
         <div>
-            @if(recipe.image) {
-                <img [src]="recipe.image" alt="{{ recipe.title }}" />
+            @if(recipe.imageUrl) {
+                <img [src]="recipe.imageUrl" alt="{{ recipe.name }}" />
             }
-            <h2>{{ recipe.title }}</h2>
+            <h2>{{ recipe.name }}</h2>
             <p>{{ recipe.description }}</p>
         </div>
     }
