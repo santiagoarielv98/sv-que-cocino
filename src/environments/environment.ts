@@ -1,4 +1,12 @@
 export const environment = {
-  GOOGLE_GENERATIVE_AI_API_KEY: 'API_KEY',
-  GOOGLE_GENERATIVE_AI_MODEL: 'gemini-2.0-flash-exp-image-generation',
+  apiUrl: 'https://example.com/api',
+  firebaseConfig: {
+    apiKey: 'API_KEY',
+    authDomain: 'AUTH_DOMAIN',
+    projectId: 'PROJECT_ID',
+    storageBucket: 'STORAGE_BUCKET',
+    messagingSenderId: 'SENDER_ID',
+    appId: 'APP_ID',
+    measurementId: 'MEASUREMENT_ID',
+  },
 };

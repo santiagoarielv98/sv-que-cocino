@@ -1,43 +1,19 @@
-<div class="container">
-    <h1>Recipe Generator</h1>
-    <form (ngSubmit)="generateRecipe()">
-        <div class="form-group">
-            <label for="ingredients">Ingredients:</label>
-            <textarea id="ingredients" [(ngModel)]="ingredients" name="ingredients" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="restrictions">Dietary Restrictions:</label>
-            <textarea id="restrictions" [(ngModel)]="restrictions" name="restrictions"></textarea>
-        </div>
-        <button type="submit" [disabled]="loading">Generate Recipe</button>
-    </form>
+<form (ngSubmit)="onSubmit()" #searchForm="ngForm">
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Search..." [disabled]="isDisabled" />
+    <button type="submit" [disabled]="isDisabled">Submit</button>
+</form>
 
-    <div *ngIf="loading" class="loading">Loading...</div>
-    <div *ngIf="error" class="error">{{ error }}</div>
-    <div *ngIf="recipe" class="result">
-        @if(recipe.image){
-        <img [src]="recipe.image" alt="Recipe Image" class="recipe-image">
-        }
-        <h2>Generated Recipe</h2>
-        <h3>{{ recipe.title }}</h3>
-        <p><strong>Ingredients:</strong></p>
-        <ul>
-            <li *ngFor="let ingredient of recipe.ingredients">
-                {{ ingredient.name }} - {{ ingredient.quantity }}
-            </li>
-        </ul>
-        <p><strong>Instructions:</strong></p>
-        <!-- <p>{{ recipe.instructions }}</p> -->
-        <ul>
-            <li *ngFor="let instruction of recipe.instructions">
-                {{ instruction }}
-            </li>
-        </ul>
-        <p><strong>Servings:</strong> {{ recipe.servings }}</p>
-        <p><strong>Prep Time:</strong> {{ recipe.prep_time_minutes }} minutes</p>
-        <p><strong>Cook Time:</strong> {{ recipe.cook_time_minutes }} minutes</p>
-        <p><strong>Tags:</strong> {{ recipe.tags.join(', ') }}</p>
-        <p><strong>Description:</strong> {{ recipe.description }}</p>
 
-    </div>
-</div>
+@if(recipes$ | async; as recipes) {
+    @for(recipe of recipes; track recipe.id) {
+        <div>
+            @if(recipe.image) {
+                <img [src]="recipe.image" alt="{{ recipe.title }}" />
+            }
+            <h2>{{ recipe.title }}</h2>
+            <p>{{ recipe.description }}</p>
+        </div>
+    }
+}@else {
+    <p>No recipes found.</p>
+}
