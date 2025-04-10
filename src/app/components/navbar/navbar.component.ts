@@ -1,12 +1,19 @@
 import { Component, inject } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
+import { UserMenuComponent } from '../user-menu/user-menu.component';
 import { AuthService } from '../../services/auth.service';
+import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-navbar',
-  imports: [MatIconModule, MatButtonModule, MatToolbarModule, MatMenuModule],
+  imports: [
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    UserMenuComponent,
+    AsyncPipe,
+  ],
   templateUrl: './navbar.component.html',
   styles: `
     .toolbar-container {
@@ -22,5 +29,6 @@ import { AuthService } from '../../services/auth.service';
   `,
 })
 export class NavbarComponent {
-  authservice = inject(AuthService);
+  private authService = inject(AuthService);
+  user$ = this.authService.user$;
 }
