@@ -1,9 +1,25 @@
-<h3>Three line list with secondary text wrapping</h3>
-<div class="example-list-wrapping" >
-  <mat-list-item >
-    <app-recipe-card />
-  </mat-list-item>
-  <mat-list-item >
-  <app-recipe-card />
-  </mat-list-item>
-</div>
+<section class="recipe-list-container">
+  <header class="recipe-list-header">
+    <h2>Recetas Recomendadas</h2>
+  </header>
+  
+  <div class="recipe-grid">
+    @for (recipe of recipes; track recipe.id) {
+      <app-recipe-card
+        [title]="recipe.title"
+        [description]="recipe.description"
+        [imageUrl]="recipe.imageUrl"
+        [ingredients]="recipe.ingredients"
+        [difficulty]="recipe.difficulty"
+        [prepTime]="recipe.prepTime"
+        [cookTime]="recipe.cookTime"
+        [servings]="recipe.servings"
+        [dietaryRestrictions]="recipe.dietaryRestrictions">
+      </app-recipe-card>
+    }
+    
+    @if (recipes.length === 0) {
+      <p class="no-recipes">No hay recetas para mostrar</p>
+    }
+  </div>
+</section>
