@@ -27,18 +27,32 @@
         <div class="col">
           <mat-form-field class="full-width" floatLabel="always">
             <mat-label>Restricciones dietéticas</mat-label>
-            <mat-chip-grid #reactiveChipGrid aria-label="Selecciona restricciones dietéticas" [formControl]="formControl">
-              @for (restriction of dietaryRestrictions(); track restriction) {
-              <mat-chip-option (removed)="removeDietaryRestriction(restriction)">
+            <mat-chip-grid #chipGrid aria-label="Selecciona restricciones dietéticas">
+              <!-- Default restrictions (can be selected but not removed) -->
+              @for (restriction of defaultRestrictions(); track restriction) {
+              <mat-chip-option 
+                [selected]="selectedRestrictions.value?.includes(restriction)"
+                (selectionChange)="toggleDefaultRestriction(restriction, $event.selected)"
+                [removable]="false">
                 {{restriction}}
-                <button matChipRemove>
+              </mat-chip-option>
+              }
+              
+              <!-- Custom restrictions (can be selected and removed) -->
+              @for (restriction of customRestrictions(); track restriction) {
+              <mat-chip-option 
+                [selected]="selectedRestrictions.value?.includes(restriction)"
+                (selectionChange)="toggleCustomRestriction(restriction, $event.selected)"
+                (removed)="removeCustomRestriction(restriction)">
+                {{restriction}}
+                <button matChipRemove [ariaLabel]="'Quitar ' + restriction">
                   <mat-icon>cancel</mat-icon>
                 </button>
               </mat-chip-option>
               }
             </mat-chip-grid>
-            <input placeholder="Nueva restricción..." [matChipInputFor]="reactiveChipGrid"
-              (matChipInputTokenEnd)="addDietaryRestriction($event)" />
+            <input placeholder="Nueva restricción..." [matChipInputFor]="chipGrid"
+              (matChipInputTokenEnd)="addCustomRestriction($event)" />
           </mat-form-field>
         </div>
       </div>

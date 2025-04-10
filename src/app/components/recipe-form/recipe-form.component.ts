@@ -62,7 +62,7 @@ export class RecipeFormComponent {
     recipeType: ['idea', Validators.required],
   });
 
-  readonly dietaryRestrictions = signal([
+  readonly defaultRestrictions = signal([
     'Sin TACC',
     'Vegano',
     'Vegetariano',
@@ -70,36 +70,75 @@ export class RecipeFormComponent {
     'Sin frutos secos',
   ]);
 
-  readonly formControl = new FormControl(['Sin TACC']);
+  readonly customRestrictions = signal<string[]>([]);
+
+  readonly selectedRestrictions = new FormControl<string[]>([]);
 
   announcer = inject(LiveAnnouncer);
 
-  removeDietaryRestriction(restriction: string) {
-    this.dietaryRestrictions.update((restrictions) => {
+  toggleDefaultRestriction(restriction: string, isSelected: boolean): void {
+    const currentSelections = this.selectedRestrictions.value || [];
+
+    if (isSelected) {
+      if (!currentSelections.includes(restriction)) {
+        this.selectedRestrictions.setValue([...currentSelections, restriction]);
+        this.announcer.announce(`Se seleccionó ${restriction}`);
+      }
+    } else {
+      const newSelections = currentSelections.filter((r) => r !== restriction);
+      this.selectedRestrictions.setValue(newSelections);
+      this.announcer.announce(`Se deseleccionó ${restriction}`);
+    }
+  }
+
+  toggleCustomRestriction(restriction: string, isSelected: boolean): void {
+    this.toggleDefaultRestriction(restriction, isSelected);
+  }
+
+  removeCustomRestriction(restriction: string) {
+    this.customRestrictions.update((restrictions) => {
       const index = restrictions.indexOf(restriction);
       if (index < 0) {
         return restrictions;
       }
 
       restrictions.splice(index, 1);
+
+      const currentSelections = this.selectedRestrictions.value || [];
+      if (currentSelections.includes(restriction)) {
+        const newSelections = currentSelections.filter(
+          (r) => r !== restriction,
+        );
+        this.selectedRestrictions.setValue(newSelections);
+      }
+
       this.announcer.announce(`Se eliminó ${restriction} de las restricciones`);
       return [...restrictions];
     });
   }
 
-  addDietaryRestriction(event: MatChipInputEvent): void {
+  addCustomRestriction(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    // Add our restriction
     if (value) {
-      this.dietaryRestrictions.update((restrictions) => [
-        ...restrictions,
-        value,
-      ]);
-      this.announcer.announce(`Se agregó ${value} a las restricciones`);
+      const allRestrictions = [
+        ...this.defaultRestrictions(),
+        ...this.customRestrictions(),
+      ];
+
+      if (!allRestrictions.includes(value)) {
+        this.customRestrictions.update((restrictions) => [
+          ...restrictions,
+          value,
+        ]);
+        this.announcer.announce(`Se agregó ${value} a las restricciones`);
+        this.selectedRestrictions.setValue([
+          ...(this.selectedRestrictions.value || []),
+          value,
+        ]);
+      }
     }
 
-    // Clear the input value
     event.chipInput!.clear();
   }
 
@@ -108,14 +147,11 @@ export class RecipeFormComponent {
       recipeInput: null,
       recipeType: 'idea',
     });
-    this.dietaryRestrictions.set([
-      'Sin TACC',
-      'Vegano',
-      'Vegetariano',
-      'Sin lactosa',
-      'Sin frutos secos',
-    ]);
-    this.formControl.setValue(['Sin TACC']);
+
+    this.customRestrictions.set([]);
+
+    this.selectedRestrictions.setValue([]);
+
     this.announcer.announce('Formulario reiniciado');
   }
 
