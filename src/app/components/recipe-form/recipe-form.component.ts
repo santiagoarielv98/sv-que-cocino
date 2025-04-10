@@ -1,11 +1,19 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-recipe-form',
@@ -15,22 +23,14 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
+    MatChipsModule,
     ReactiveFormsModule,
+    MatIconModule,
   ],
   templateUrl: './recipe-form.component.html',
   styles: `
     .full-width {
       width: 100%;
-    }
-
-    .shipping-card {
-      min-width: 120px;
-      margin: 20px auto;
-    }
-
-    .mat-radio-button {
-      display: block;
-      margin: 5px 0;
     }
 
     .row {
@@ -45,6 +45,13 @@ import { MatCardModule } from '@angular/material/card';
 
     .col:last-child {
       margin-right: 0;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      margin: 15px 0;
+      align-items: flex-start;
     }
   `,
 })
@@ -68,6 +75,41 @@ export class RecipeFormComponent {
     ],
     shipping: ['free', Validators.required],
   });
+  readonly reactiveKeywords = signal([
+    'angular',
+    'how-to',
+    'tutorial',
+    'accessibility',
+  ]);
+  readonly formControl = new FormControl(['angular']);
+
+  announcer = inject(LiveAnnouncer);
+
+  removeReactiveKeyword(keyword: string) {
+    this.reactiveKeywords.update((keywords) => {
+      const index = keywords.indexOf(keyword);
+      if (index < 0) {
+        return keywords;
+      }
+
+      keywords.splice(index, 1);
+      this.announcer.announce(`removed ${keyword} from reactive form`);
+      return [...keywords];
+    });
+  }
+
+  addReactiveKeyword(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our keyword
+    if (value) {
+      this.reactiveKeywords.update((keywords) => [...keywords, value]);
+      this.announcer.announce(`added ${value} to reactive form`);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
 
   hasUnitNumber = false;
 
