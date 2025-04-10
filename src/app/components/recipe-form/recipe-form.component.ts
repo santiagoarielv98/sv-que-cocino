@@ -155,8 +155,6 @@ export class RecipeFormComponent {
       recipeType: 'idea',
     });
 
-    this.customRestrictions.set([]);
-
     this.selectedRestrictions.setValue([]);
 
     this.announcer.announce('Formulario reiniciado');
