@@ -164,6 +164,8 @@ export class RecipeFormComponent {
 
   onSubmit(): void {
     const generationType = this.recipeForm.get('generationType')?.value;
+    this.recipeForm.get('idea')?.setErrors(null);
+    this.recipeForm.get('ingredients')?.setErrors(null);
 
     if (
       generationType === 'idea' &&
