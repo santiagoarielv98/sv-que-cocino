@@ -15,9 +15,9 @@
       }
 
       <div class="recipe-tags">
-        <mat-chip-set aria-label="Ingredientes principales">
-          @for(ingredient of ingredients; track ingredient){
-            <mat-chip color="primary" disableRipple>{{ingredient}}</mat-chip>
+        <mat-chip-set aria-label="Etiquetas de la receta">
+          @for(tag of tags; track tag){
+            <mat-chip color="primary" disableRipple>{{tag}}</mat-chip>
           }
         </mat-chip-set>
       </div>

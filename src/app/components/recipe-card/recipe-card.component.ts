@@ -66,7 +66,7 @@ export class RecipeCardComponent {
   @Input() title = '';
   @Input() description = '';
   @Input() imageUrl?: string;
-  @Input() ingredients: string[] = [];
+  @Input() tags: string[] = [];
   @Input() difficulty?: string;
   @Input() prepTime?: number;
   @Input() cookTime?: number;
