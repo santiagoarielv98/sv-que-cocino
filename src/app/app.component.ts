@@ -21,7 +21,6 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dialog.open(AuthDialogComponent, {
-      // width: '400px',
       maxWidth: '420px',
       width: '100%',
       autoFocus: true,

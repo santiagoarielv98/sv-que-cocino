@@ -1,9 +1,15 @@
 import { Component, inject } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
+import { FirebaseError } from '@angular/fire/app';
+import { AuthErrorCodes } from '@angular/fire/auth';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { AuthService } from '../../services/auth.service';
+
+const initialEmail = 'demo@example.com';
+const initialPassword = 'password2';
 
 @Component({
   selector: 'app-login-form',
@@ -17,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './login-form.component.html',
   styles: `
     .login-container {
+      margin-top: 16px;
       padding: 0 16px;
     }
 
@@ -41,12 +48,12 @@ import { MatIconModule } from '@angular/material/icon';
   `,
 })
 export class LoginFormComponent {
+  private authService = inject(AuthService);
   private fb = inject(FormBuilder);
 
   loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-    rememberMe: [false],
+    email: [initialEmail, [Validators.required, Validators.email]],
+    password: [initialPassword, [Validators.required, Validators.minLength(6)]],
   });
 
   hidePassword = true;
@@ -55,13 +62,31 @@ export class LoginFormComponent {
     this.hidePassword = !this.hidePassword;
   }
 
-  onSubmit(): void {
+  async onSubmit() {
     if (this.loginForm.valid) {
-      console.log('Login form submitted:', this.loginForm.value);
-      // Here you would typically call an authentication service
-      alert('Iniciar sesión con: ' + this.loginForm.value.email);
+      try {
+        await this.authService.login(
+          this.loginForm.value.email as string,
+          this.loginForm.value.password as string,
+        );
+      } catch (error) {
+        if (error instanceof FirebaseError) {
+          const errorCode = error.code;
+
+          if (errorCode === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
+            this.loginForm.setErrors({
+              invalidLogin: true,
+            });
+          } else if (errorCode === AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER) {
+            this.loginForm.setErrors({
+              tooManyAttempts: true,
+            });
+          } else {
+            console.log('Login error:', errorCode);
+          }
+        }
+      }
     } else {
-      // Mark all fields as touched to trigger validation messages
       this.loginForm.markAllAsTouched();
     }
   }
