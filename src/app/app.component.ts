@@ -6,5 +6,12 @@ import { RecipeListComponent } from './components/recipe-list/recipe-list.compon
   imports: [NavbarComponent, RecipeFormComponent, RecipeListComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
+  styles: `
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+  `,
 })
 export class AppComponent {}
