@@ -63,7 +63,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 export class RecipeFormComponent {
   private fb = inject(FormBuilder);
   recipeForm = this.fb.group({
-    recipeInput: [null, Validators.required],
     generationType: ['idea', Validators.required],
     idea: [''],
     ingredients: [''],
@@ -153,7 +152,6 @@ export class RecipeFormComponent {
 
   resetForm(): void {
     this.recipeForm.reset({
-      recipeInput: null,
       generationType: 'idea',
       idea: '',
       ingredients: '',
