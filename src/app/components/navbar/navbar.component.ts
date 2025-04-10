@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { UserMenuComponent } from '../user-menu/user-menu.component';
 import { AuthService } from '../../services/auth.service';
 import { AsyncPipe } from '@angular/common';
+import { AuthDialogStateService } from '../../services/auth-dialog-state.service';
 @Component({
   selector: 'app-navbar',
   imports: [
@@ -30,5 +31,6 @@ import { AsyncPipe } from '@angular/common';
 })
 export class NavbarComponent {
   private authService = inject(AuthService);
+  authDialogStateService = inject(AuthDialogStateService);
   user$ = this.authService.user$;
 }

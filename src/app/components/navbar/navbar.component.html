@@ -14,7 +14,7 @@
       </button>
       <app-user-menu />
     } @else {
-      <button mat-button>
+      <button mat-button (click)="authDialogStateService.openAuthDialog()">
         <mat-icon>person</mat-icon>
         Iniciar Sesión
       </button>
