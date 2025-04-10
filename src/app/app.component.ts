@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
-import { MatDialog } from '@angular/material/dialog';
-import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 @Component({
   imports: [NavbarComponent, RecipeFormComponent, RecipeListComponent],
   selector: 'app-root',

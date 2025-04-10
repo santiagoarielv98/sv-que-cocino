@@ -5,7 +5,6 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
-  user,
 } from '@angular/fire/auth';
 
 @Injectable({
@@ -14,7 +13,6 @@ import {
 export class AuthService {
   private auth = inject(Auth);
   private googleProvider = new GoogleAuthProvider();
-  user$ = user(this.auth);
 
   async login(email: string, password: string): Promise<void> {
     try {
