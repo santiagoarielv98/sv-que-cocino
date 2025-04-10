@@ -62,9 +62,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 })
 export class RecipeFormComponent {
   private fb = inject(FormBuilder);
-  addressForm = this.fb.group({
+  recipeForm = this.fb.group({
     recipeInput: [null, Validators.required],
-    recipeType: ['idea', Validators.required],
+    generationType: ['idea', Validators.required],
+    idea: [''],
+    ingredients: [''],
   });
 
   isLoading = signal(false);
@@ -150,9 +152,11 @@ export class RecipeFormComponent {
   }
 
   resetForm(): void {
-    this.addressForm.reset({
+    this.recipeForm.reset({
       recipeInput: null,
-      recipeType: 'idea',
+      generationType: 'idea',
+      idea: '',
+      ingredients: '',
     });
 
     this.selectedRestrictions.setValue([]);
@@ -161,13 +165,13 @@ export class RecipeFormComponent {
   }
 
   onSubmit(): void {
-    if (this.addressForm.valid) {
-      this.addressForm.disable();
+    if (this.recipeForm.valid) {
+      this.recipeForm.disable();
       this.isLoading.set(true);
       this.announcer.announce('Generando receta, por favor espere...');
 
       setTimeout(() => {
-        this.addressForm.enable();
+        this.recipeForm.enable();
         this.isLoading.set(false);
         this.announcer.announce('¡Receta generada!');
       }, 1000);

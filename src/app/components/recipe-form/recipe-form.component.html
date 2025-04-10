@@ -1,5 +1,5 @@
 
-<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="recipeForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="recipe-form-card">
     @if(isLoading()) {
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -10,20 +10,25 @@
     <mat-card-content>
       <div class="row">
         <div class="col">
-          <span for="recipeType" class="radio-group-label">Selecciona el tipo de receta</span>
-          <mat-radio-group formControlName="recipeType" class="radio-group"
+          <span for="generationType" class="radio-group-label">Selecciona el tipo de receta</span>
+          <mat-radio-group formControlName="generationType" class="radio-group"
             aria-labelledby="radio-group-label">
             <mat-radio-button value="idea">Por idea</mat-radio-button>
             <mat-radio-button value="ingredients">Por ingredientes</mat-radio-button>
-          </mat-radio-group>
+          </mat-radio-group>  
         </div>
       </div>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width" >
-            <mat-label>{{ addressForm.value.recipeType === 'idea' ? 'Describe tu idea de receta' : 'Ingredientes separados por comas' }}</mat-label>
-            <textarea matInput formControlName="recipeInput" cdkTextareaAutosize  cdkAutosizeMinRows="3"
-            cdkAutosizeMaxRows="10"></textarea>
+            <mat-label>{{ recipeForm.value.generationType === 'idea' ? 'Describe tu idea de receta' : 'Ingredientes separados por comas' }}</mat-label>
+            @if(recipeForm.value.generationType === 'idea'){
+              <textarea matInput formControlName="idea" cdkTextareaAutosize  cdkAutosizeMinRows="3"
+              cdkAutosizeMaxRows="10"></textarea>
+            }@else {
+              <textarea matInput formControlName="ingredients" cdkTextareaAutosize  cdkAutosizeMinRows="3"
+              cdkAutosizeMaxRows="10"></textarea>
+            }
           </mat-form-field>
         </div>
       </div>
