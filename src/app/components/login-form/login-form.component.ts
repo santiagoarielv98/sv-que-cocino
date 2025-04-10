@@ -71,19 +71,22 @@ export class LoginFormComponent {
         );
       } catch (error) {
         if (error instanceof FirebaseError) {
-          const errorCode = error.code;
-
-          if (errorCode === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
-            this.loginForm.setErrors({
-              invalidLogin: true,
-            });
-          } else if (errorCode === AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER) {
-            this.loginForm.setErrors({
-              tooManyAttempts: true,
-            });
-          } else {
-            console.log('Login error:', errorCode);
+          switch (error.code) {
+            case AuthErrorCodes.INVALID_LOGIN_CREDENTIALS:
+              this.loginForm.setErrors({
+                invalidLogin: true,
+              });
+              break;
+            case AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER:
+              this.loginForm.setErrors({
+                tooManyAttempts: true,
+              });
+              break;
+            default:
+              console.log('Login error:', error.code);
           }
+        } else {
+          console.error('Unexpected error:', error);
         }
       }
     } else {

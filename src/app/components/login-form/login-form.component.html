@@ -8,6 +8,7 @@
             type="email"
             formControlName="email"
             placeholder="ejemplo@correo.com"
+            autocomplete="email"
           />
           @if (
             loginForm.controls['email'].invalid &&
@@ -36,6 +37,7 @@
             matInput
             [type]="hidePassword ? 'password' : 'text'"
             formControlName="password"
+            autocomplete="current-password"
           />
           <mat-icon
             matSuffix

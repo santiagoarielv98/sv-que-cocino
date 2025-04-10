@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import {
   Auth,
+  createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -29,6 +30,15 @@ export class AuthService {
       await signInWithPopup(this.auth, this.googleProvider);
     } catch (error) {
       console.error('Google login error:', error);
+      throw error;
+    }
+  }
+
+  async register(email: string, password: string): Promise<void> {
+    try {
+      await createUserWithEmailAndPassword(this.auth, email, password);
+    } catch (error) {
+      console.error('Registration error:', error);
       throw error;
     }
   }

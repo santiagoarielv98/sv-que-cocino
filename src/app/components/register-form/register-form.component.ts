@@ -9,6 +9,9 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { AuthService } from '../../services/auth.service';
+import { FirebaseError } from '@angular/fire/app';
+import { AuthErrorCodes } from '@angular/fire/auth';
 
 // Custom validator for password matching
 function passwordMatchValidator(
@@ -34,6 +37,7 @@ function passwordMatchValidator(
   templateUrl: './register-form.component.html',
   styles: `
     .register-container {
+      margin-top: 16px;
       padding: 0 16px;
     }
 
@@ -58,6 +62,7 @@ function passwordMatchValidator(
   `,
 })
 export class RegisterFormComponent {
+  private authService = inject(AuthService);
   private fb = inject(FormBuilder);
 
   registerForm = this.fb.group(
@@ -82,11 +87,30 @@ export class RegisterFormComponent {
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      console.log('Register form submitted:', this.registerForm.value);
-      // Here you would typically call a registration service
-      alert('Cuenta creada para: ' + this.registerForm.value.email);
+      try {
+        this.authService.register(
+          this.registerForm.value.email as string,
+          this.registerForm.value.password as string,
+        );
+      } catch (error) {
+        if (error instanceof FirebaseError) {
+          switch (error.code) {
+            case AuthErrorCodes.EMAIL_EXISTS:
+              this.registerForm.get('email')?.setErrors({ emailExists: true });
+              break;
+            case AuthErrorCodes.WEAK_PASSWORD:
+              this.registerForm
+                .get('password')
+                ?.setErrors({ weakPassword: true });
+              break;
+            default:
+              console.error('Registration error:', error.code);
+          }
+        } else {
+          console.error('Unexpected error:', error);
+        }
+      }
     } else {
-      // Mark all fields as touched to trigger validation messages
       this.registerForm.markAllAsTouched();
     }
   }
