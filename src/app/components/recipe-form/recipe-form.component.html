@@ -1,47 +1,52 @@
 <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Shipping Information</mat-card-title>
+      <mat-card-title>Generador de Recetas</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
         <div class="col">
-          <label id="radio-group-label">Pick your favorite season</label>
-          <mat-radio-group formControlName="shipping" class="radio-group"
+          <span for="recipeType" class="radio-group-label">Selecciona el tipo de receta</span>
+          <mat-radio-group formControlName="recipeType" class="radio-group"
             aria-labelledby="radio-group-label">
-            <mat-radio-button value="free">Free Shipping</mat-radio-button>
-            <mat-radio-button value="priority">Priority Shipping</mat-radio-button>
-            <mat-radio-button value="nextday">Next Day Shipping</mat-radio-button>
+            <mat-radio-button value="idea">Por idea</mat-radio-button>
+            <mat-radio-button value="ingredients">Por ingredientes</mat-radio-button>
           </mat-radio-group>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Company" formControlName="company">
+          <mat-form-field class="full-width" >
+            <mat-label>{{ addressForm.value.recipeType === 'idea' ? 'Describe tu idea de receta' : 'Ingredientes separados por comas' }}</mat-label>
+            <textarea matInput formControlName="recipeInput" cdkTextareaAutosize  cdkAutosizeMinRows="3"
+            cdkAutosizeMaxRows="10"></textarea>
           </mat-form-field>
         </div>
       </div>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width" floatLabel="always">
-            <mat-label>Video keywords</mat-label>
-            <mat-chip-grid #reactiveChipGrid aria-label="Enter reactive form keywords" [formControl]="formControl">
-              @for (keyword of reactiveKeywords(); track keyword) {
-              <mat-chip-option (removed)="removeReactiveKeyword(keyword)">
-                {{keyword}}
+            <mat-label>Restricciones dietéticas</mat-label>
+            <mat-chip-grid #reactiveChipGrid aria-label="Selecciona restricciones dietéticas" [formControl]="formControl">
+              @for (restriction of dietaryRestrictions(); track restriction) {
+              <mat-chip-option (removed)="removeDietaryRestriction(restriction)">
+                {{restriction}}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
               </mat-chip-option>
               }
             </mat-chip-grid>
-            <input placeholder="New keyword..." [matChipInputFor]="reactiveChipGrid"
-              (matChipInputTokenEnd)="addReactiveKeyword($event)" />
+            <input placeholder="Nueva restricción..." [matChipInputFor]="reactiveChipGrid"
+              (matChipInputTokenEnd)="addDietaryRestriction($event)" />
           </mat-form-field>
         </div>
       </div>
      
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit">Generar Receta</button>
+      <button mat-raised-button type="button" (click)="resetForm()">Reiniciar</button>
     </mat-card-actions>
   </mat-card>
 </form>
