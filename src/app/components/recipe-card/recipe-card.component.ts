@@ -63,17 +63,15 @@ import { MatIconModule } from '@angular/material/icon';
   `,
 })
 export class RecipeCardComponent {
-  @Input() title = 'Pasta Carbonara';
-  @Input() description =
-    'Una deliciosa pasta italiana con huevo, queso parmesano, panceta y pimienta negra.';
-  @Input() imageUrl =
-    'https://material.angular.io/assets/img/examples/shiba2.jpg';
-  @Input() ingredients: string[] = ['Pasta', 'Huevo', 'Panceta'];
-  @Input() difficulty = 'Media';
-  @Input() prepTime = '15 min';
-  @Input() cookTime = '10 min';
-  @Input() servings = 4;
-  @Input() dietaryRestrictions: string[] = ['Sin TACC', 'Vegetariano'];
+  @Input() title = '';
+  @Input() description = '';
+  @Input() imageUrl?: string;
+  @Input() ingredients: string[] = [];
+  @Input() difficulty?: string;
+  @Input() prepTime?: number;
+  @Input() cookTime?: number;
+  @Input() servings?: number;
+  @Input() dietaryRestrictions: string[] = [];
 
   viewFullRecipe(): void {
     console.log('Viewing full recipe for:', this.title);

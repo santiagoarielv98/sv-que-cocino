@@ -1,5 +1,5 @@
 <app-navbar/>
 <div class="container">
     <app-recipe-form/>
-    <app-recipe-list/>
+    <app-recipe-list [recipes]="(recipes$ | async) ?? []"/>
 </div>

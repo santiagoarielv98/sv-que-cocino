@@ -1,20 +1,20 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, inject, signal } from '@angular/core';
-
 import {
-  ReactiveFormsModule,
   FormBuilder,
-  Validators,
   FormControl,
+  ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { RecipeService } from '../../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-form',
@@ -62,6 +62,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 })
 export class RecipeFormComponent {
   private fb = inject(FormBuilder);
+  private recipeService = inject(RecipeService);
   recipeForm = this.fb.group({
     generationType: ['idea', Validators.required],
     idea: [''],
@@ -211,11 +212,29 @@ export class RecipeFormComponent {
       this.isLoading.set(true);
       this.announcer.announce('Generando receta, por favor espere...');
 
-      setTimeout(() => {
-        this.recipeForm.enable();
-        this.isLoading.set(false);
-        this.announcer.announce('¡Receta generada!');
-      }, 1000);
+      const recipeOptions = {
+        generationType: formData.generationType!,
+        idea: generationType === 'idea' ? formData.idea : '',
+        ingredients: formData.ingredients,
+        restrictions: formData.restrictions || [],
+      };
+
+      this.recipeService.generateRecipe(recipeOptions).subscribe({
+        next: (recipe) => {
+          console.log('Receta generada:', recipe);
+          this.recipeForm.enable();
+          this.isLoading.set(false);
+          this.announcer.announce('¡Receta generada!');
+        },
+        error: (error) => {
+          console.error('Error al generar receta:', error);
+          this.recipeForm.enable();
+          this.isLoading.set(false);
+          this.announcer.announce(
+            'Error al generar la receta. Inténtalo nuevamente.',
+          );
+        },
+      });
     } else {
       console.log(this.recipeForm.errors);
       this.announcer.announce('Por favor completa los campos requeridos');

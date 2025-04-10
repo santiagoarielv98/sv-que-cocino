@@ -3,10 +3,15 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 export interface GenerateRecipeOptions {
-  idea?: string;
+  generationType: string;
+  idea: string;
+  ingredients: string[];
+  restrictions: string[];
 }
 
-export interface GenerateImageOptions {}
+export interface GenerateImageOptions {
+  idea?: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +21,7 @@ export class ApiService {
   private apiUrl = environment.apiUrl;
 
   generateRecipe(recipe: GenerateRecipeOptions) {
-    return this.http.post(`${this.apiUrl}/generate-recipe`, recipe);
+    return this.http.post(`${this.apiUrl}/recipes`, recipe);
   }
 
   generateImage(recipe: GenerateImageOptions) {
