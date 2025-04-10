@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
@@ -16,15 +15,13 @@ import { RecipeListComponent } from './components/recipe-list/recipe-list.compon
     }
   `,
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
   readonly dialog = inject(MatDialog);
+}
 
-  ngAfterViewInit(): void {
-    this.dialog.open(AuthDialogComponent, {
+/*  this.dialog.open(AuthDialogComponent, {
       maxWidth: '420px',
       width: '100%',
       autoFocus: true,
       disableClose: true,
-    });
-  }
-}
+    }); */
