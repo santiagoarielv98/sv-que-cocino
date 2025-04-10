@@ -1,0 +1,121 @@
+<div class="register-container">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-field">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            placeholder="ejemplo@correo.com"
+          />
+          <mat-icon matPrefix>email</mat-icon>
+          @if (
+            registerForm.controls['email'].invalid &&
+            (registerForm.controls['email'].dirty ||
+              registerForm.controls['email'].touched)
+          ) {
+            @if (registerForm.controls['email'].errors?.['required']) {
+              <mat-error
+                >El correo electrónico es
+                <strong>obligatorio</strong></mat-error
+              >
+            } @else if (registerForm.controls['email'].errors?.['email']) {
+              <mat-error
+                >Por favor ingrese un correo electrónico
+                <strong>válido</strong></mat-error
+              >
+            }
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+          />
+          <mat-icon matPrefix>lock</mat-icon>
+          <mat-icon
+            matSuffix
+            (click)="togglePasswordVisibility()"
+            class="visibility-icon"
+          >
+            {{ hidePassword ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+        
+          @if (
+            registerForm.controls['password'].invalid &&
+            (registerForm.controls['password'].dirty ||
+              registerForm.controls['password'].touched)
+          ) {
+            @if (registerForm.controls['password'].errors?.['required']) {
+              <mat-error
+                >La contraseña es <strong>obligatoria</strong></mat-error
+              >
+            } @else if (
+              registerForm.controls['password'].errors?.['minlength']
+            ) {
+              <mat-error
+                >La contraseña debe tener al menos 6 caracteres</mat-error
+              >
+            }
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Confirmar contraseña</mat-label>
+          <input
+            matInput
+            [type]="hideConfirmPassword ? 'password' : 'text'"
+            formControlName="confirmPassword"
+          />
+          <mat-icon matPrefix>lock</mat-icon>
+          <mat-icon
+            matSuffix
+            (click)="toggleConfirmPasswordVisibility()"
+            class="visibility-icon"
+          >
+            {{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+     
+          @if (
+            registerForm.controls['confirmPassword'].invalid &&
+            (registerForm.controls['confirmPassword'].dirty ||
+              registerForm.controls['confirmPassword'].touched)
+          ) {
+            @if (
+              registerForm.controls['confirmPassword'].errors?.['required']
+            ) {
+              <mat-error
+                >Confirmar la contraseña es
+                <strong>obligatorio</strong></mat-error
+              >
+            }
+          }
+          @if (
+            registerForm.hasError('passwordMismatch') &&
+            registerForm.controls['confirmPassword'].dirty
+          ) {
+            <mat-error>Las contraseñas no coinciden</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="register-actions">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="registerForm.invalid"
+        >
+          Registrarse
+        </button>
+      </div>
+    </form>
+</div>
