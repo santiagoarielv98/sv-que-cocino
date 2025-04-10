@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -9,9 +9,73 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [MatCardModule, MatButtonModule, MatChipsModule, MatIconModule],
   templateUrl: './recipe-card.component.html',
   styles: `
-    .recipe-card {
-      flex-direction: row;
+    @media (min-width: 768px) {
+      .recipe-card {
+        flex-direction: row;
+      }
+
+      .recipe-image-container {
+        max-width: 400px;
+        padding: 16px;
+      }
+
+      mat-card-actions {
+        justify-content: flex-start;
+      }
+    }
+
+    .recipe-image-container img {
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .recipe-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .recipe-tags {
+      margin-bottom: 16px;
+    }
+
+    .recipe-metadata {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .metadata-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    mat-card-actions {
+      justify-content: flex-end;
+    }
+
+    @media (max-width: 500px) {
+      .recipe-metadata {
+        grid-template-columns: 1fr;
+      }
     }
   `,
 })
-export class RecipeCardComponent {}
+export class RecipeCardComponent {
+  @Input() title = 'Pasta Carbonara';
+  @Input() description =
+    'Una deliciosa pasta italiana con huevo, queso parmesano, panceta y pimienta negra.';
+  @Input() imageUrl =
+    'https://material.angular.io/assets/img/examples/shiba2.jpg';
+  @Input() ingredients: string[] = ['Pasta', 'Huevo', 'Panceta'];
+  @Input() difficulty = 'Media';
+  @Input() prepTime = '15 min';
+  @Input() cookTime = '10 min';
+  @Input() servings = 4;
+  @Input() dietaryRestrictions: string[] = ['Sin TACC', 'Vegetariano'];
+
+  viewFullRecipe(): void {
+    console.log('Viewing full recipe for:', this.title);
+  }
+}

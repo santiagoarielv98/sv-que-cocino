@@ -1,37 +1,67 @@
 <mat-card class="recipe-card" appearance="outlined">
-  <mat-card-content>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-  </mat-card-content>
-  <div>
+  <div class="recipe-image-container">
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto de la receta">
+  </div>
+  <div class="recipe-content">
+    <mat-card-header>
+      <mat-card-title>Pasta Carbonara</mat-card-title>
+    </mat-card-header>
+
     <mat-card-content>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-chip-set aria-label="Fish selection">
-        <mat-chip disableRipple>One fish</mat-chip>
-        <mat-chip disableRipple>Two fish</mat-chip>
-        <mat-chip disableRipple>Three fish</mat-chip>
-      </mat-chip-set>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting.
+      <p class="recipe-description">
+        Una deliciosa pasta italiana con huevo, queso parmesano, panceta y pimienta negra. Un clásico que nunca falla.
       </p>
+
+      <div class="recipe-tags">
+        <mat-chip-set aria-label="Ingredientes principales">
+          <mat-chip color="primary" disableRipple>Pasta</mat-chip>
+          <mat-chip color="primary" disableRipple>Huevo</mat-chip>
+          <mat-chip color="primary" disableRipple>Panceta</mat-chip>
+        </mat-chip-set>
+      </div>
+
+      <div class="recipe-metadata">
+        <div class="metadata-item">
+          <mat-icon aria-hidden="false" aria-label="Dificultad">signal_cellular_alt</mat-icon>
+          <span>Dificultad:</span>
+          <b>Media</b>
+        </div>
+
+        <div class="metadata-item">
+          <mat-icon aria-hidden="false" aria-label="Tiempo de preparación">schedule</mat-icon>
+          <span>Preparación: </span>
+          <b>15 min</b>
+        </div>
+
+        <div class="metadata-item">
+          <mat-icon aria-hidden="false" aria-label="Tiempo de cocción">timer</mat-icon>
+          <span>Cocción:</span>
+          <b>10 min</b>
+        </div>
+
+        <div class="metadata-item">
+          <mat-icon aria-hidden="false" aria-label="Porciones">people</mat-icon>
+          <span>Porciones:</span>
+          <b>4</b>
+        </div>
+      </div>
+
+      <div class="dietary-restrictions">
+        <mat-chip-set aria-label="Restricciones dietéticas">
+          <mat-chip color="accent" disableRipple>
+            <mat-icon matChipAvatar>check_circle</mat-icon>
+            Sin TACC
+          </mat-chip>
+          <mat-chip color="accent" disableRipple>
+            <mat-icon matChipAvatar>check_circle</mat-icon>
+            Vegetariano
+          </mat-chip>
+        </mat-chip-set>
+      </div>
     </mat-card-content>
-    <div>
-      <mat-chip-set aria-label="Fish selection">
-        <mat-chip disableRipple>
-          <mat-icon matChipAvatar>favorite</mat-icon>
-          One fish
-        </mat-chip>
-        <mat-chip disableRipple>
-          <mat-icon matChipAvatar>favorite</mat-icon>
-          One fish</mat-chip>
-        <mat-chip disableRipple>
-          <mat-icon matChipAvatar>favorite</mat-icon>
-          One fish</mat-chip>
-      </mat-chip-set>
-    </div>
+
     <mat-card-actions>
-      <button mat-button>LIKE</button>
+      <button mat-raised-button>Ver receta completa</button>
     </mat-card-actions>
   </div>
 </mat-card>
