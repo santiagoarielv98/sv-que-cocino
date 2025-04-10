@@ -1,8 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthDialogComponent } from './components/auth-dialog/auth-dialog.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
+import { AuthService } from './services/auth.service';
+
 @Component({
   imports: [NavbarComponent, RecipeFormComponent, RecipeListComponent],
   selector: 'app-root',
@@ -15,13 +18,22 @@ import { RecipeListComponent } from './components/recipe-list/recipe-list.compon
     }
   `,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   readonly dialog = inject(MatDialog);
-}
+  private authService = inject(AuthService);
 
-/*  this.dialog.open(AuthDialogComponent, {
-      maxWidth: '420px',
-      width: '100%',
-      autoFocus: true,
-      disableClose: true,
-    }); */
+  ngOnInit() {
+    this.authService.user$.subscribe((user) => {
+      if (!user) {
+        this.dialog.open(AuthDialogComponent, {
+          maxWidth: '420px',
+          width: '100%',
+          autoFocus: true,
+          disableClose: true,
+        });
+      } else {
+        this.dialog.closeAll();
+      }
+    });
+  }
+}
