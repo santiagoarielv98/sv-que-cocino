@@ -1,19 +1,16 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-recipe-card',
-  imports: [MatCardModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonModule, MatChipsModule, MatIconModule],
   templateUrl: './recipe-card.component.html',
   styles: `
-    .example-card {
-      max-width: 400px;
-    }
-
-    .example-header-image {
-      background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-      background-size: cover;
+    .recipe-card {
+      flex-direction: row;
     }
   `,
 })
