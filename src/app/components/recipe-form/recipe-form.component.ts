@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-recipe-form',
@@ -26,9 +27,13 @@ import { MatIconModule } from '@angular/material/icon';
     MatChipsModule,
     ReactiveFormsModule,
     MatIconModule,
+    MatProgressBarModule,
   ],
   templateUrl: './recipe-form.component.html',
   styles: `
+    .recipe-form-card {
+      overflow: hidden;
+    }
     .full-width {
       width: 100%;
     }
@@ -61,6 +66,8 @@ export class RecipeFormComponent {
     recipeInput: [null, Validators.required],
     recipeType: ['idea', Validators.required],
   });
+
+  isLoading = signal(false);
 
   readonly defaultRestrictions = signal([
     'Sin TACC',
@@ -157,7 +164,15 @@ export class RecipeFormComponent {
 
   onSubmit(): void {
     if (this.addressForm.valid) {
-      alert('¡Receta generada!');
+      this.addressForm.disable();
+      this.isLoading.set(true);
+      this.announcer.announce('Generando receta, por favor espere...');
+
+      setTimeout(() => {
+        this.addressForm.enable();
+        this.isLoading.set(false);
+        this.announcer.announce('¡Receta generada!');
+      }, 1000);
     } else {
       this.announcer.announce('Por favor completa los campos requeridos');
     }

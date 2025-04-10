@@ -1,5 +1,9 @@
+
 <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
-  <mat-card class="shipping-card">
+  <mat-card class="recipe-form-card">
+    @if(isLoading()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
     <mat-card-header>
       <mat-card-title>Generador de Recetas</mat-card-title>
     </mat-card-header>
@@ -59,8 +63,8 @@
      
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Generar Receta</button>
-      <button mat-raised-button type="button" (click)="resetForm()">Reiniciar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="isLoading()">Generar Receta</button>
+      <button mat-raised-button type="button" (click)="resetForm()" [disabled]="isLoading()">Reiniciar</button>
     </mat-card-actions>
   </mat-card>
 </form>
