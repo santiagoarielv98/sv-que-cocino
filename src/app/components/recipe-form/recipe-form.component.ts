@@ -163,7 +163,48 @@ export class RecipeFormComponent {
   }
 
   onSubmit(): void {
+    const generationType = this.recipeForm.get('generationType')?.value;
+
+    if (
+      generationType === 'idea' &&
+      !this.recipeForm.get('idea')?.value?.trim()
+    ) {
+      this.recipeForm.get('idea')?.setErrors({ required: true });
+      this.announcer.announce('Por favor describe tu idea de receta');
+      return;
+    }
+
+    if (generationType === 'ingredients') {
+      const ingredientsString =
+        this.recipeForm.get('ingredients')?.value?.trim() || '';
+      const ingredientsArray = ingredientsString
+        .split(',')
+        .map((item) => item.trim())
+        .filter((item) => item.length > 0);
+
+      if (ingredientsArray.length === 0) {
+        this.recipeForm.get('ingredients')?.setErrors({ required: true });
+        this.announcer.announce('Por favor ingresa al menos un ingrediente');
+        return;
+      }
+    }
+
     if (this.recipeForm.valid) {
+      const formData = {
+        generationType,
+        idea: this.recipeForm.get('idea')?.value || '',
+        ingredients:
+          generationType === 'ingredients'
+            ? (this.recipeForm.get('ingredients')?.value || '')
+                .split(',')
+                .map((item: string) => item.trim())
+                .filter((item: string) => item.length > 0)
+            : [],
+        restrictions: this.selectedRestrictions.value || [],
+      };
+
+      console.log('Data para enviar:', formData);
+
       this.recipeForm.disable();
       this.isLoading.set(true);
       this.announcer.announce('Generando receta, por favor espere...');
@@ -174,6 +215,7 @@ export class RecipeFormComponent {
         this.announcer.announce('¡Receta generada!');
       }, 1000);
     } else {
+      console.log(this.recipeForm.errors);
       this.announcer.announce('Por favor completa los campos requeridos');
     }
   }
