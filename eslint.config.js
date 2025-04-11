@@ -8,6 +8,9 @@ const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommen
 module.exports = tseslint.config(
   {
     files: ["**/*.ts"],
+    ignores: [
+      "**/environments/*.ts",
+    ],
     extends: [
       eslint.configs.recommended,
       ...tseslint.configs.recommended,
