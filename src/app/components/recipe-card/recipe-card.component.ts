@@ -6,6 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { getDifficultyLabel } from '../../utils/difficulty';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import type { Recipe } from '../../../types/app';
 @Component({
   selector: 'app-recipe-card',
   templateUrl: './recipe-card.component.html',
@@ -101,30 +102,27 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   `,
 })
 export class RecipeCardComponent {
-  @Input({ required: true }) title = '';
-  @Input({ required: true }) description = '';
-  @Input() imageUrl?: string =
-    'https://material.angular.io/assets/img/examples/shiba2.jpg';
-  @Input({ required: true }) tags: string[] = [];
   @Input({
-    transform: (v: string) => getDifficultyLabel(v),
+    required: true,
+    transform: (v: Recipe) => ({
+      ...v,
+      difficulty: getDifficultyLabel(v.difficulty),
+    }),
   })
-  difficulty?: string;
-  @Input({ required: true }) prepTime = 0;
-  @Input({ required: true }) cookTime = 0;
-  @Input({ required: true }) servings = 0;
-  @Input({ required: true }) dietaryRestrictions: string[] = [];
-  @Input() recipeId?: string;
+  recipe!: Recipe;
 
   @Output() generateImageRequest = new EventEmitter<string>();
+  @Output() viewRecipe = new EventEmitter<Recipe>();
 
   generateImage() {
-    if (this.recipeId) {
-      this.generateImageRequest.emit(this.recipeId);
-    }
+    // if (this.recipeId) {
+    //   this.generateImageRequest.emit(this.recipeId);
+    // }
   }
 
   viewFullRecipe(): void {
-    console.log('Viewing full recipe for:', this.title);
+    if (this.recipe) {
+      this.viewRecipe.emit(this.recipe);
+    }
   }
 }

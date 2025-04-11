@@ -1,7 +1,7 @@
 <mat-card class="recipe-card" appearance="outlined">
   <div class="recipe-image-container">
-    @if(imageUrl) {
-      <img mat-card-image [src]="imageUrl" alt="Foto de la receta">
+    @if(recipe.imageUrl) {
+      <img mat-card-image [src]="recipe.imageUrl" alt="Foto de la receta">
     } @else {
       <div class="image-placeholder">
         <button mat-raised-button color="primary" matTooltip="No disponible aún" [matTooltipPosition]="'above'">
@@ -13,19 +13,19 @@
   </div>
   <div class="recipe-content">
     <mat-card-header>
-      <mat-card-title>{{title}}</mat-card-title>
+      <mat-card-title>{{recipe.title}}</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
-      @if(description){
+      @if(recipe.description){
         <p class="recipe-description">
-          {{description}}
+          {{recipe.description}}
         </p>
       }
 
       <div class="recipe-tags">
         <mat-chip-set aria-label="Etiquetas de la receta">
-          @for(tag of tags; track tag){
+          @for(tag of recipe.tags; track tag){
             <mat-chip color="primary" disableRipple>{{tag}}</mat-chip>
           }
         </mat-chip-set>
@@ -35,31 +35,31 @@
         <div class="metadata-item">
           <mat-icon aria-hidden="false" aria-label="Dificultad">signal_cellular_alt</mat-icon>
           <span>Dificultad:</span>
-          <b>{{difficulty}}</b>
+          <b>{{recipe.difficulty}}</b>
         </div>
 
         <div class="metadata-item">
           <mat-icon aria-hidden="false" aria-label="Tiempo de preparación">schedule</mat-icon>
           <span>Preparación: </span>
-          <b>{{prepTime}} min</b>
+          <b>{{recipe.prepTime}} min</b>
         </div>
 
         <div class="metadata-item">
           <mat-icon aria-hidden="false" aria-label="Tiempo de cocción">timer</mat-icon>
           <span>Cocción:</span>
-          <b>{{cookTime}} min</b>
+          <b>{{recipe.cookTime}} min</b>
         </div>
 
         <div class="metadata-item">
           <mat-icon aria-hidden="false" aria-label="Porciones">people</mat-icon>
           <span>Porciones:</span>
-          <b>{{servings}}</b>
+          <b>{{recipe.servings}}</b>
         </div>
       </div>
 
       <div class="dietary-restrictions">
         <mat-chip-set aria-label="Restricciones dietéticas">
-          @for(restriction of dietaryRestrictions; track restriction){
+          @for(restriction of recipe.restrictions; track restriction){
             <mat-chip color="accent" disableRipple>
               <mat-icon matChipAvatar>check_circle</mat-icon>
               {{restriction}}
@@ -70,7 +70,7 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-flat-button>Ver receta completa</button>
+      <button mat-flat-button (click)="viewFullRecipe()">Ver receta completa</button>
     </mat-card-actions>
   </div>
 </mat-card>

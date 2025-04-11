@@ -2,24 +2,14 @@
   <header class="recipe-list-header">
     <h2>Recetas Generadas</h2>
   </header>
-  
+
   <div class="recipe-grid">
     @for (recipe of recipes; track recipe.id) {
-      <app-recipe-card
-        [title]="recipe.title"
-        [description]="recipe.description"
-        [imageUrl]="recipe.imageUrl"
-        [tags]="recipe.tags"
-        [difficulty]="recipe.difficulty"
-        [prepTime]="recipe.prepTime"
-        [cookTime]="recipe.cookTime"
-        [servings]="recipe.servings"
-        [dietaryRestrictions]="recipe.restrictions">
-      </app-recipe-card>
+    <app-recipe-card [recipe]="recipe" (viewRecipe)="openDetail($event)" />
     }
-    
+
     @if (recipes.length === 0) {
-      <p class="no-recipes">No hay recetas para mostrar</p>
+    <p class="no-recipes">No hay recetas para mostrar</p>
     }
   </div>
 </section>
