@@ -32,9 +32,8 @@ export class ApiService {
   }
 
   generateImage(recipe: Recipe) {
-    return this.http.post<GenerateImageResponse>(
-      `${this.apiUrl}/generate-image`,
-      recipe,
-    );
+    return this.http
+      .post<GenerateImageResponse>(`${this.apiUrl}/generate-image`, recipe)
+      .pipe();
   }
 }
