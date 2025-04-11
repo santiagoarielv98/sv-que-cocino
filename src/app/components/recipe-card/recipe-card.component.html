@@ -1,6 +1,15 @@
 <mat-card class="recipe-card" appearance="outlined">
   <div class="recipe-image-container">
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Foto de la receta">
+    @if(imageUrl) {
+      <img mat-card-image [src]="imageUrl" alt="Foto de la receta">
+    } @else {
+      <div class="image-placeholder">
+        <button mat-raised-button color="primary" (click)="generateImage()">
+          <mat-icon>add_photo_alternate</mat-icon>
+          Generar Imagen
+        </button>
+      </div>
+    }
   </div>
   <div class="recipe-content">
     <mat-card-header>
