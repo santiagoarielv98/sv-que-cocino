@@ -1,6 +1,6 @@
 @let recipe = detail();
-<mat-dialog-content class="recipe-content">
-    <div class="recipe-header">
+<mat-dialog-content class="recipe-content-scroll">
+    <div class="recipe-header-container">
         @if(recipe.imageUrl) {
         <img [src]="recipe.imageUrl" [alt]="recipe.title" class="recipe-image">
         } @else {
@@ -12,10 +12,10 @@
             <h2 mat-dialog-title>{{recipe.title}}</h2>
         </div>
     </div>
-    <div class="c">
+    <div class="recipe-content-padding">
         <p class="recipe-description">{{recipe.description}}</p>
 
-        <div class="recipe-metadata">
+        <div class="recipe-metadata-grid">
             <div class="metadata-item">
                 <mat-icon>signal_cellular_alt</mat-icon>
                 <span>Dificultad: <strong>{{recipe.difficulty}}</strong></span>
@@ -82,7 +82,7 @@
         </div>
     </div>
 </mat-dialog-content>
-<mat-dialog-actions>
+<mat-dialog-actions class="dialog-actions">
     <button mat-button (click)="closeDialog()">CERRAR</button>
     <!-- <button mat-raised-button color="primary">
         <mat-icon>favorite_border</mat-icon>

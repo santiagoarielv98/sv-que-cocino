@@ -27,7 +27,7 @@ export interface DialogData {
   ],
   templateUrl: './recipe-detail-dialog.component.html',
   styles: `
-    .recipe-header {
+    .recipe-header-container {
       position: relative;
       color: white;
     }
@@ -56,16 +56,16 @@ export interface DialogData {
       background-color: #f0f0f0;
     }
 
-    .recipe-content {
+    .recipe-content-scroll {
       padding: 0;
       max-height: calc(100vh - 7.5rem);
     }
 
-    .c {
+    .recipe-content-padding {
       padding: 24px;
     }
 
-    .recipe-metadata {
+    .recipe-metadata-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
@@ -101,7 +101,7 @@ export interface DialogData {
       margin-bottom: 16px;
     }
 
-    .action-buttons {
+    .dialog-actions {
       display: flex;
       justify-content: flex-end;
       gap: 8px;
@@ -109,7 +109,7 @@ export interface DialogData {
     }
 
     @media (max-width: 500px) {
-      .recipe-metadata {
+      .recipe-metadata-grid {
         grid-template-columns: 1fr;
       }
     }
