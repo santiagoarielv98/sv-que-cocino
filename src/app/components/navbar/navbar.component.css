@@ -1,3 +1,10 @@
+.mat-toolbar{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--mat-sys-primary-container);
+    box-shadow: var(--mat-sys-level2);
+}
 .toolbar-container {
     max-width: 1200px;
     margin: 0 auto;
