@@ -22,7 +22,7 @@ import type { Recipe } from '../../../types/app';
     .no-recipes {
       text-align: center;
       padding: 32px;
-      background-color: #f5f5f5;
+      background-color: var(--mat-sys-on-secondary);
       border-radius: 8px;
     }
   `,

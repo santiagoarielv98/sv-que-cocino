@@ -6,12 +6,12 @@
     <span>¿Que Cocino?</span>
     <span class="toolbar-spacer"></span>
     @if(user$ | async;as user) {
-      <button mat-icon-button aria-label="Favoritos">
+      <!-- <button mat-icon-button aria-label="Favoritos">
         <mat-icon>favorite</mat-icon>
       </button>
       <button mat-icon-button aria-label="Mis recetas">
         <mat-icon>book</mat-icon>
-      </button>
+      </button> -->
       <app-user-menu />
     } @else {
       <button mat-button (click)="authDialogStateService.openAuthDialog()">

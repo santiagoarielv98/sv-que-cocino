@@ -4,6 +4,8 @@ import {
   addDoc,
   collection,
   collectionData,
+  orderBy,
+  query,
 } from '@angular/fire/firestore';
 import type { Observable } from 'rxjs';
 import { tap } from 'rxjs';
@@ -18,7 +20,11 @@ export class RecipeService {
   private firestore = inject(Firestore);
   private apiService = inject(ApiService);
   private recipeCollection = collection(this.firestore, 'recipes');
-  recipes$ = collectionData(this.recipeCollection, {
+  private recipeQuery = query(
+    this.recipeCollection,
+    orderBy('createdAt', 'desc'),
+  );
+  recipes$ = collectionData(this.recipeQuery, {
     idField: 'id',
   }) as Observable<Recipe[]>;
 

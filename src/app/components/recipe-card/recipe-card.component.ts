@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { getDifficultyLabel } from '../../utils/difficulty';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 @Component({
   selector: 'app-recipe-card',
   templateUrl: './recipe-card.component.html',
@@ -16,6 +16,7 @@ import { getDifficultyLabel } from '../../utils/difficulty';
     MatChipsModule,
     MatIconModule,
     MatButtonModule,
+    MatTooltipModule,
   ],
   styles: `
     .recipe-card {
@@ -41,7 +42,7 @@ import { getDifficultyLabel } from '../../utils/difficulty';
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #f5f5f5;
+      background-color: var(--mat-sys-on-primary);
       border-radius: 4px 4px 0 0;
     }
 

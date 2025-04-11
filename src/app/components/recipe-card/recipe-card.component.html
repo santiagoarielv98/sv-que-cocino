@@ -4,7 +4,7 @@
       <img mat-card-image [src]="imageUrl" alt="Foto de la receta">
     } @else {
       <div class="image-placeholder">
-        <button mat-raised-button color="primary" (click)="generateImage()">
+        <button mat-raised-button color="primary" matTooltip="No disponible aún" [matTooltipPosition]="'above'">
           <mat-icon>add_photo_alternate</mat-icon>
           Generar Imagen
         </button>
@@ -70,7 +70,7 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-raised-button>Ver receta completa</button>
+      <button mat-flat-button>Ver receta completa</button>
     </mat-card-actions>
   </div>
 </mat-card>
