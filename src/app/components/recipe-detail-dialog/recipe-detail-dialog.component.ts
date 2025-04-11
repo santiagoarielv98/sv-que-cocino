@@ -27,12 +27,6 @@ export interface DialogData {
   ],
   templateUrl: './recipe-detail-dialog.component.html',
   styles: `
-    .recipe-detail-container {
-      padding: 0;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
     .recipe-header {
       position: relative;
       color: white;
@@ -63,6 +57,11 @@ export interface DialogData {
     }
 
     .recipe-content {
+      padding: 0;
+      max-height: calc(100vh - 7.5rem);
+    }
+
+    .c {
       padding: 24px;
     }
 
@@ -107,6 +106,12 @@ export interface DialogData {
       justify-content: flex-end;
       gap: 8px;
       padding: 16px 24px;
+    }
+
+    @media (max-width: 500px) {
+      .recipe-metadata {
+        grid-template-columns: 1fr;
+      }
     }
   `,
 })

@@ -12,6 +12,8 @@ export class RecipeDetailDialogStateService {
   openRecipeDetailDialog(recipe: Recipe) {
     this.dialog.open(RecipeDetailDialogComponent, {
       data: { recipe },
+      width: '100%',
+      maxWidth: '600px',
     });
   }
 }

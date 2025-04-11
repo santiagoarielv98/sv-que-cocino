@@ -1,103 +1,91 @@
 @let recipe = detail();
-
-
-
-<div class="recipe-detail-container">
-  <!-- Cabecera con imagen -->
-  <div class="recipe-header">
-    @if(recipe.imageUrl) {
-      <img [src]="recipe.imageUrl" [alt]="recipe.title" class="recipe-image">
-    } @else {
-      <div class="image-placeholder">
-        <mat-icon>image</mat-icon>
-      </div>
-    }
-    <div class="recipe-header-overlay">
-      <h2 mat-dialog-title>{{recipe.title}}</h2>
-    </div>
-  </div>
-
-  <mat-dialog-content class="recipe-content">
-    <!-- Descripción -->
-    <p class="recipe-description">{{recipe.description}}</p>
-
-    <!-- Metadatos -->
-    <div class="recipe-metadata">
-      <div class="metadata-item">
-        <mat-icon>signal_cellular_alt</mat-icon>
-        <span>Dificultad: <strong>{{recipe.difficulty}}</strong></span>
-      </div>
-      <div class="metadata-item">
-        <mat-icon>schedule</mat-icon>
-        <span>Preparación: <strong>{{recipe.prepTime}} min</strong></span>
-      </div>
-      <div class="metadata-item">
-        <mat-icon>timer</mat-icon>
-        <span>Cocción: <strong>{{recipe.cookTime}} min</strong></span>
-      </div>
-      <div class="metadata-item">
-        <mat-icon>people</mat-icon>
-        <span>Porciones: <strong>{{recipe.servings}}</strong></span>
-      </div>
-    </div>
-
-    <!-- Etiquetas -->
-    @if(recipe.tags && recipe.tags.length > 0) {
-      <div class="recipe-section">
-        <h3>Etiquetas</h3>
-        <mat-chip-set>
-          @for(tag of recipe.tags; track tag) {
-            <mat-chip color="primary" disableRipple>{{tag}}</mat-chip>
-          }
-        </mat-chip-set>
-      </div>
-    }
-
-    <!-- Restricciones dietéticas -->
-    @if(recipe.restrictions && recipe.restrictions.length > 0) {
-      <div class="recipe-section">
-        <h3>Restricciones dietéticas</h3>
-        <mat-chip-set>
-          @for(restriction of recipe.restrictions; track restriction) {
-            <mat-chip color="accent" disableRipple>
-              <mat-icon matChipAvatar>check_circle</mat-icon>
-              {{restriction}}
-            </mat-chip>
-          }
-        </mat-chip-set>
-      </div>
-    }
-
-    <mat-divider></mat-divider>
-
-    <!-- Ingredientes -->
-    <div class="recipe-section">
-      <h3>Ingredientes</h3>
-      <ul class="ingredients-list">
-        @for(ingredient of recipe.ingredients; track ingredient) {
-          <li>{{ingredient}}</li>
+<mat-dialog-content class="recipe-content">
+    <div class="recipe-header">
+        @if(recipe.imageUrl) {
+        <img [src]="recipe.imageUrl" [alt]="recipe.title" class="recipe-image">
+        } @else {
+        <div class="image-placeholder">
+            <mat-icon>image</mat-icon>
+        </div>
         }
-      </ul>
+        <div class="recipe-header-overlay">
+            <h2 mat-dialog-title>{{recipe.title}}</h2>
+        </div>
     </div>
+    <div class="c">
+        <p class="recipe-description">{{recipe.description}}</p>
 
-    <mat-divider></mat-divider>
+        <div class="recipe-metadata">
+            <div class="metadata-item">
+                <mat-icon>signal_cellular_alt</mat-icon>
+                <span>Dificultad: <strong>{{recipe.difficulty}}</strong></span>
+            </div>
+            <div class="metadata-item">
+                <mat-icon>schedule</mat-icon>
+                <span>Preparación: <strong>{{recipe.prepTime}} min</strong></span>
+            </div>
+            <div class="metadata-item">
+                <mat-icon>timer</mat-icon>
+                <span>Cocción: <strong>{{recipe.cookTime}} min</strong></span>
+            </div>
+            <div class="metadata-item">
+                <mat-icon>people</mat-icon>
+                <span>Porciones: <strong>{{recipe.servings}}</strong></span>
+            </div>
+        </div>
 
-    <!-- Pasos de preparación -->
-    <div class="recipe-section">
-      <h3>Instrucciones</h3>
-      <ol class="steps-list">
-        @for(step of recipe.steps; track step) {
-          <li>{{step}}</li>
+        @if(recipe.tags && recipe.tags.length > 0) {
+        <div class="recipe-section">
+            <h3>Etiquetas</h3>
+            <mat-chip-set>
+                @for(tag of recipe.tags; track tag) {
+                <mat-chip color="primary" disableRipple>{{tag}}</mat-chip>
+                }
+            </mat-chip-set>
+        </div>
         }
-      </ol>
-    </div>
-  </mat-dialog-content>
 
-  <div class="action-buttons">
+        @if(recipe.restrictions && recipe.restrictions.length > 0) {
+        <div class="recipe-section">
+            <h3>Restricciones dietéticas</h3>
+            <mat-chip-set>
+                @for(restriction of recipe.restrictions; track restriction) {
+                <mat-chip color="accent" disableRipple>
+                    <mat-icon matChipAvatar>check_circle</mat-icon>
+                    {{restriction}}
+                </mat-chip>
+                }
+            </mat-chip-set>
+        </div>
+        }
+
+        <mat-divider></mat-divider>
+
+        <div class="recipe-section">
+            <h3>Ingredientes</h3>
+            <ul class="ingredients-list">
+                @for(ingredient of recipe.ingredients; track ingredient) {
+                <li>{{ingredient}}</li>
+                }
+            </ul>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="recipe-section">
+            <h3>Instrucciones</h3>
+            <ol class="steps-list">
+                @for(step of recipe.steps; track step) {
+                <li>{{step}}</li>
+                }
+            </ol>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
     <button mat-button (click)="closeDialog()">CERRAR</button>
-    <button mat-raised-button color="primary">
-      <mat-icon>favorite_border</mat-icon>
-      GUARDAR
-    </button>
-  </div>
-</div>
+    <!-- <button mat-raised-button color="primary">
+        <mat-icon>favorite_border</mat-icon>
+        GUARDAR
+    </button> -->
+</mat-dialog-actions>
