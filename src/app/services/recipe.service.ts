@@ -4,14 +4,15 @@ import {
   addDoc,
   collection,
   collectionData,
+  limit,
   orderBy,
   query,
 } from '@angular/fire/firestore';
 import type { Observable } from 'rxjs';
 import { tap } from 'rxjs';
+import type { Recipe } from '../../types/app';
 import type { GenerateRecipeOptions } from './api.service';
 import { ApiService } from './api.service';
-import type { Recipe } from '../../types/app';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class RecipeService {
   private recipeQuery = query(
     this.recipeCollection,
     orderBy('createdAt', 'desc'),
+    limit(20),
   );
   recipes$ = collectionData(this.recipeQuery, {
     idField: 'id',
