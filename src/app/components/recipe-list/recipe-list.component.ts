@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { RecipeCardComponent } from '../recipe-card/recipe-card.component';
-import { Recipe } from '../../../types/app';
+import type { Recipe } from '../../../types/app';
 
 @Component({
   selector: 'app-recipe-list',

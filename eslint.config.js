@@ -33,6 +33,7 @@ module.exports = tseslint.config(
           style: "kebab-case",
         },
       ],
+      "@typescript-eslint/consistent-type-imports": "error"
     },
   },
   {

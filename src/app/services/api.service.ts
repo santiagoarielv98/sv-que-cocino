@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Recipe } from '../../types/app';
+import type { Recipe } from '../../types/app';
 
 export interface GenerateRecipeOptions {
   generationType: string;

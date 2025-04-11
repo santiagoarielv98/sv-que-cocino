@@ -5,15 +5,11 @@ import {
   collection,
   collectionData,
 } from '@angular/fire/firestore';
+import type { Observable } from 'rxjs';
 import { tap } from 'rxjs';
+import type { GenerateRecipeOptions } from './api.service';
 import { ApiService } from './api.service';
-
-interface GenerateRecipeOptions {
-  generationType: string;
-  idea: string;
-  ingredients: string[];
-  restrictions: string[];
-}
+import type { Recipe } from '../../types/app';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +20,7 @@ export class RecipeService {
   private recipeCollection = collection(this.firestore, 'recipes');
   recipes$ = collectionData(this.recipeCollection, {
     idField: 'id',
-  });
+  }) as Observable<Recipe[]>;
 
   generateRecipe(options: GenerateRecipeOptions) {
     return this.apiService.generateRecipe(options).pipe(

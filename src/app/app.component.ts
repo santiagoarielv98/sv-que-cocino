@@ -1,7 +1,5 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Recipe } from '../types/app';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
@@ -26,5 +24,5 @@ import { RecipeService } from './services/recipe.service';
 })
 export class AppComponent {
   private recipeService = inject(RecipeService);
-  recipes$ = this.recipeService.recipes$ as Observable<Recipe[]>;
+  recipes$ = this.recipeService.recipes$;
 }
