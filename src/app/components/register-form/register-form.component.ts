@@ -5,10 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../services/auth.service';
-import { FirebaseError } from '@angular/fire/app';
-import { AuthErrorCodes } from '@angular/fire/auth';
+import { FirebaseErrorUtil } from '../../utils/firebase-error.util';
 
-// Custom validator for password matching
 function passwordMatchValidator(
   control: AbstractControl,
 ): ValidationErrors | null {
@@ -30,31 +28,7 @@ function passwordMatchValidator(
     MatIconModule,
   ],
   templateUrl: './register-form.component.html',
-  styles: `
-    .register-container {
-      margin-top: 16px;
-      padding: 0 16px;
-    }
-
-    .full-width {
-      width: 100%;
-    }
-
-    .form-field {
-      margin-bottom: 16px;
-    }
-
-    .register-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 24px;
-    }
-
-    .visibility-icon {
-      cursor: pointer;
-    }
-  `,
+  styleUrls: ['./register-form.component.css'],
 })
 export class RegisterFormComponent {
   private authService = inject(AuthService);
@@ -88,21 +62,8 @@ export class RegisterFormComponent {
           this.registerForm.value.password as string,
         );
       } catch (error) {
-        if (error instanceof FirebaseError) {
-          switch (error.code) {
-            case AuthErrorCodes.EMAIL_EXISTS:
-              this.registerForm.get('email')?.setErrors({ emailExists: true });
-              break;
-            case AuthErrorCodes.WEAK_PASSWORD:
-              this.registerForm
-                .get('password')
-                ?.setErrors({ weakPassword: true });
-              break;
-            default:
-              console.error('Registration error:', error.code);
-          }
-        } else {
-          console.error('Unexpected error:', error);
+        if (!FirebaseErrorUtil.handleAuthError(error, this.registerForm)) {
+          console.error('Unhandled error during registration:', error);
         }
       }
     } else {

@@ -1,0 +1,23 @@
+.register-container {
+    margin-top: 16px;
+    padding: 0 16px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.form-field {
+    margin-bottom: 16px;
+}
+
+.register-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.visibility-icon {
+    cursor: pointer;
+}

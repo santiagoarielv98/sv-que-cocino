@@ -48,9 +48,6 @@ export class ApiService implements OnDestroy {
   }
 
   generateRecipe(recipe: GenerateRecipeOptions) {
-    if (!this.idToken) {
-      throw new Error('ID token is not available');
-    }
     return this.http.post(`${this.apiUrl}/recipes`, recipe, {
       headers: {
         Authorization: `Bearer ${this.idToken}`,

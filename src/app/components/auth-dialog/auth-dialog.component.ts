@@ -15,12 +15,6 @@ import { RegisterFormComponent } from '../register-form/register-form.component'
     RegisterFormComponent,
   ],
   templateUrl: './auth-dialog.component.html',
-  styles: `
-    .register-placeholder {
-      padding: 32px 16px;
-      text-align: center;
-      color: #666;
-    }
-  `,
+  styleUrls: ['./auth-dialog.component.css'],
 })
 export class AuthDialogComponent {}

@@ -16,21 +16,14 @@ import { AuthDialogStateService } from '../../services/auth-dialog-state.service
     AsyncPipe,
   ],
   templateUrl: './navbar.component.html',
-  styles: `
-    .toolbar-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      width: 100%;
-      align-items: center;
-    }
-    .toolbar-spacer {
-      flex: 1 1 auto;
-    }
-  `,
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
   private authService = inject(AuthService);
-  authDialogStateService = inject(AuthDialogStateService);
+  private authDialogStateService = inject(AuthDialogStateService);
   user$ = this.authService.user$;
+
+  openDialog() {
+    this.authDialogStateService.openAuthDialog();
+  }
 }
