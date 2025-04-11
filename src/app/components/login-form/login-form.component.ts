@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../services/auth.service';
 
 const initialEmail = 'demo@example.com';
-const initialPassword = 'password2';
+const initialPassword = 'password';
 
 @Component({
   selector: 'app-login-form',
