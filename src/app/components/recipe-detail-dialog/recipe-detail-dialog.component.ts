@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-recipe-detail-dialog',
   imports: [],
   templateUrl: './recipe-detail-dialog.component.html',
-  styles: ``
+  styles: ``,
 })
-export class RecipeDetailDialogComponent {
-
-}
+export class RecipeDetailDialogComponent {}

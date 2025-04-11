@@ -7,6 +7,7 @@ import {
 } from '@angular/fire/firestore';
 import { tap } from 'rxjs';
 import { ApiService } from './api.service';
+import { Recipe } from '../../types/app';
 
 interface GenerateRecipeOptions {
   generationType: string;
@@ -35,6 +36,15 @@ export class RecipeService {
         })
           .then(() => console.log('Recipe saved to Firestore'))
           .catch((error) => console.error('Error saving recipe:', error));
+      }),
+    );
+  }
+
+  generateImage(recipe: Recipe) {
+    return this.apiService.generateImage(recipe).pipe(
+      tap((image) => {
+        console.log(image);
+        // upload image to cloudinary
       }),
     );
   }
