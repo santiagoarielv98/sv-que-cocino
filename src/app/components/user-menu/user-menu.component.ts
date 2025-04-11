@@ -11,5 +11,5 @@ import { AuthService } from '../../services/auth.service';
   styles: ``,
 })
 export class UserMenuComponent {
-  authService = inject(AuthService);
+  protected authService = inject(AuthService);
 }

@@ -4,9 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { demoCredentials } from '../../constants/credentials';
 import { AuthService } from '../../services/auth.service';
 import { FirebaseErrorUtil } from '../../utils/firebase-error.util';
-import { demoCredentials } from '../../constants/credentials';
 
 @Component({
   selector: 'app-login-form',

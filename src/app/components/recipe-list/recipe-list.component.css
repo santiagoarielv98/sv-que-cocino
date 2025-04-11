@@ -1,0 +1,17 @@
+.recipe-list-header {
+    margin-bottom: 24px;
+}
+
+.recipe-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0 auto;
+}
+
+.no-recipes {
+    text-align: center;
+    padding: 32px;
+    background-color: var(--mat-sys-on-secondary);
+    border-radius: 8px;
+}

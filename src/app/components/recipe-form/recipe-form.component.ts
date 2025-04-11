@@ -31,35 +31,7 @@ import { RecipeService } from '../../services/recipe.service';
     MatProgressBarModule,
   ],
   templateUrl: './recipe-form.component.html',
-  styles: `
-    .recipe-form-card {
-      overflow: hidden;
-    }
-    .full-width {
-      width: 100%;
-    }
-
-    .row {
-      display: flex;
-      flex-direction: row;
-    }
-
-    .col {
-      flex: 1;
-      margin-right: 20px;
-    }
-
-    .col:last-child {
-      margin-right: 0;
-    }
-
-    .radio-group {
-      display: flex;
-      flex-direction: column;
-      margin: 15px 0;
-      align-items: flex-start;
-    }
-  `,
+  styleUrls: ['./recipe-form.component.css'],
 })
 export class RecipeFormComponent {
   private fb = inject(FormBuilder);
