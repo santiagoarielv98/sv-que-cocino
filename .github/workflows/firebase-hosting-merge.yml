@@ -15,6 +15,7 @@ jobs:
         run: |
           cat <<EOF > src/environments/environment.prod.ts
           export const environment = {
+            useEmulators: false,
             apiUrl: '${{ secrets.API_URL }}',
             firebaseConfig: {
               apiKey: '${{ secrets.FIREBASE_API_KEY }}',
