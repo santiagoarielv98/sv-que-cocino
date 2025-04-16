@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthDialogStateService {
+export class AuthDialogService {
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
   private isAuthenticated = false;

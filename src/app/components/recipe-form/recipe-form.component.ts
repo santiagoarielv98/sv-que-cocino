@@ -1,11 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, inject, signal } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import type { MatChipInputEvent } from '@angular/material/chips';
@@ -37,8 +32,6 @@ export class RecipeFormComponent {
   private fb = inject(FormBuilder);
   private recipeService = inject(RecipeService);
   recipeForm = this.fb.group({
-    generationType: ['idea', Validators.required],
-    idea: [''],
     ingredients: [''],
   });
 
@@ -126,8 +119,6 @@ export class RecipeFormComponent {
 
   resetForm(): void {
     this.recipeForm.reset({
-      generationType: 'idea',
-      idea: '',
       ingredients: '',
     });
 
@@ -140,15 +131,6 @@ export class RecipeFormComponent {
     const generationType = this.recipeForm.get('generationType')?.value;
     this.recipeForm.get('idea')?.setErrors(null);
     this.recipeForm.get('ingredients')?.setErrors(null);
-
-    if (
-      generationType === 'idea' &&
-      !this.recipeForm.get('idea')?.value?.trim()
-    ) {
-      this.recipeForm.get('idea')?.setErrors({ required: true });
-      this.announcer.announce('Por favor describe tu idea de receta');
-      return;
-    }
 
     if (generationType === 'ingredients') {
       const ingredientsString =

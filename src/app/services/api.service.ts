@@ -28,12 +28,12 @@ export class ApiService {
   private apiUrl = environment.apiUrl;
 
   generateRecipe(recipe: GenerateRecipeOptions) {
-    return this.http.post(`${this.apiUrl}/recipes`, recipe);
+    return this.http.post<Recipe>(`${this.apiUrl}/recipe`, recipe);
   }
 
   generateImage(recipe: Recipe) {
     return this.http
-      .post<GenerateImageResponse>(`${this.apiUrl}/generate-image`, recipe)
+      .post<GenerateImageResponse>(`${this.apiUrl}/image`, recipe)
       .pipe();
   }
 }

@@ -6,7 +6,7 @@ import { RecipeDetailDialogComponent } from '../components/recipe-detail-dialog/
 @Injectable({
   providedIn: 'root',
 })
-export class RecipeDetailDialogStateService {
+export class RecipeDetailDialogService {
   private dialog = inject(MatDialog);
 
   openRecipeDetailDialog(recipe: Recipe) {

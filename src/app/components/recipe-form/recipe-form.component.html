@@ -10,25 +10,10 @@
     <mat-card-content>
       <div class="row">
         <div class="col">
-          <span for="generationType" class="radio-group-label">Selecciona el tipo de receta</span>
-          <mat-radio-group formControlName="generationType" class="radio-group"
-            aria-labelledby="radio-group-label">
-            <mat-radio-button value="idea">Por idea</mat-radio-button>
-            <mat-radio-button value="ingredients">Por ingredientes</mat-radio-button>
-          </mat-radio-group>  
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
           <mat-form-field class="full-width" >
-            <mat-label>{{ recipeForm.value.generationType === 'idea' ? 'Describe tu idea de receta' : 'Ingredientes separados por comas' }}</mat-label>
-            @if(recipeForm.value.generationType === 'idea'){
-              <textarea matInput formControlName="idea" cdkTextareaAutosize  cdkAutosizeMinRows="3"
-              cdkAutosizeMaxRows="10"></textarea>
-            }@else {
-              <textarea matInput formControlName="ingredients" cdkTextareaAutosize  cdkAutosizeMinRows="3"
-              cdkAutosizeMaxRows="10"></textarea>
-            }
+            <mat-label>Ingredientes separados por comas</mat-label>
+            <textarea matInput formControlName="ingredients" cdkTextareaAutosize  cdkAutosizeMinRows="3"
+            cdkAutosizeMaxRows="10"></textarea>
           </mat-form-field>
         </div>
       </div>

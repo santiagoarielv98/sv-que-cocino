@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AuthDialogStateService } from '../../services/auth-dialog-state.service';
+import { AuthDialogService } from '../../services/auth-dialog.service';
 import { AuthService } from '../../services/auth.service';
 import { UserMenuComponent } from '../user-menu/user-menu.component';
 @Component({
@@ -20,7 +20,7 @@ import { UserMenuComponent } from '../user-menu/user-menu.component';
 })
 export class NavbarComponent {
   private authService = inject(AuthService);
-  private authDialogStateService = inject(AuthDialogStateService);
+  private authDialogStateService = inject(AuthDialogService);
   user$ = this.authService.user$;
 
   openDialog() {

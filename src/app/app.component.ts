@@ -14,13 +14,7 @@ import { RecipeService } from './services/recipe.service';
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styles: `
-    .container {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 20px;
-    }
-  `,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   private recipeService = inject(RecipeService);
