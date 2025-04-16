@@ -10,6 +10,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { RecipeFormService } from '../../services/recipe-form.service';
+import { RecipeService } from '../../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-form',
@@ -28,6 +29,7 @@ import { RecipeFormService } from '../../services/recipe-form.service';
   styleUrls: ['./recipe-form.component.css'],
 })
 export class RecipeFormComponent {
+  private recipeService = inject(RecipeService);
   protected formService = inject(RecipeFormService);
 
   isLoading = signal(false);
@@ -46,5 +48,10 @@ export class RecipeFormComponent {
 
   resetForm() {
     this.formService.resetForm();
+  }
+
+  onSubmit() {
+    if (this.recipeForm.invalid) return;
+    this.isLoading.set(true);
   }
 }

@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import type { FormArray } from '@angular/forms';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { ingredientValidator } from '../validators/ingredient.directive';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class RecipeFormService {
   private fb = inject(FormBuilder);
   private recipeForm = this.fb.group({
-    ingredients: ['', Validators.minLength(2)],
+    ingredients: ['', [ingredientValidator()]],
     restrictions: this.fb.array([]),
   });
 

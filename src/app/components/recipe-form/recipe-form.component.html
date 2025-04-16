@@ -1,5 +1,5 @@
 
-<form [formGroup]="recipeForm" novalidate>
+<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="recipe-form">
   <mat-card class="recipe-form-card">
     @if(isLoading()) {
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
