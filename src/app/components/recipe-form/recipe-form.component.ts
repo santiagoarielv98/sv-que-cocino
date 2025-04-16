@@ -43,7 +43,8 @@ export class RecipeFormComponent {
     if (!this.formService.addCustomRestriction(event.value)) return;
     event.chipInput!.clear();
   }
-  log(value: string) {
-    console.log(value);
+
+  resetForm() {
+    this.formService.resetForm();
   }
 }

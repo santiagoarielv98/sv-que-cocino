@@ -22,7 +22,7 @@
           <mat-form-field class="full-width" floatLabel="always">
             <mat-label>Restricciones dietéticas</mat-label>
             <mat-chip-grid #chipGrid aria-label="Selecciona restricciones dietéticas">
-              <!-- Default restrictions (can be selected but not removed) -->
+
               @for (restriction of defaultRestrictions; track restriction) {
               <mat-chip-option 
                 [selected]="isSelected(restriction)"
@@ -32,7 +32,6 @@
               </mat-chip-option>
               }
               
-              <!-- Custom restrictions (can be selected and removed) -->
               @for (restriction of customRestrictions(); track restriction) {
               <mat-chip-option
                 [selected]="isSelected(restriction)"
@@ -55,7 +54,7 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit" [disabled]="isLoading()">Generar Receta</button>
-      <!-- <button mat-raised-button type="button" (click)="resetForm()" [disabled]="isLoading()">Reiniciar</button> -->
+      <button mat-raised-button type="button" (click)="resetForm()" [disabled]="isLoading()">Reiniciar</button>
     </mat-card-actions>
   </mat-card>
 </form>
