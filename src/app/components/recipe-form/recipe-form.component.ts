@@ -64,13 +64,12 @@ export class RecipeFormComponent {
         restrictions,
       })
       .subscribe({
-        next: (response) => {
+        next: () => {
           this.isLoading.set(false);
-          console.log(response);
+          this.resetForm();
         },
-        error: (error) => {
+        error: () => {
           this.isLoading.set(false);
-          console.error(error);
         },
       });
   }
