@@ -53,5 +53,25 @@ export class RecipeFormComponent {
   onSubmit() {
     if (this.recipeForm.invalid) return;
     this.isLoading.set(true);
+    const value = this.formService.ingredients.value as string;
+
+    const ingredients = value.split(',').map((ingredient) => ingredient.trim());
+    const restrictions = this.formService.restrictions.value;
+
+    this.recipeService
+      .generateRecipe({
+        ingredients,
+        restrictions,
+      })
+      .subscribe({
+        next: (response) => {
+          this.isLoading.set(false);
+          console.log(response);
+        },
+        error: (error) => {
+          this.isLoading.set(false);
+          console.error(error);
+        },
+      });
   }
 }
