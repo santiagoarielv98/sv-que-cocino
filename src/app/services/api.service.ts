@@ -4,8 +4,6 @@ import { environment } from '../../environments/environment';
 import type { Recipe } from '../../types/app';
 
 export interface GenerateRecipeOptions {
-  generationType: string;
-  idea: string;
   ingredients: string[];
   restrictions: string[];
 }

@@ -1,5 +1,5 @@
 
-<form [formGroup]="recipeForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="recipeForm" novalidate>
   <mat-card class="recipe-form-card">
     @if(isLoading()) {
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -23,10 +23,10 @@
             <mat-label>Restricciones dietéticas</mat-label>
             <mat-chip-grid #chipGrid aria-label="Selecciona restricciones dietéticas">
               <!-- Default restrictions (can be selected but not removed) -->
-              @for (restriction of defaultRestrictions(); track restriction) {
+              @for (restriction of defaultRestrictions; track restriction) {
               <mat-chip-option 
-                [selected]="selectedRestrictions.value?.includes(restriction)"
-                (selectionChange)="toggleDefaultRestriction(restriction, $event.selected)"
+                [selected]="isSelected(restriction)"
+                (selectionChange)="formService.toggleRestriction(restriction, $event.selected)"
                 [removable]="false">
                 {{restriction}}
               </mat-chip-option>
@@ -34,10 +34,11 @@
               
               <!-- Custom restrictions (can be selected and removed) -->
               @for (restriction of customRestrictions(); track restriction) {
-              <mat-chip-option 
-                [selected]="selectedRestrictions.value?.includes(restriction)"
-                (selectionChange)="toggleCustomRestriction(restriction, $event.selected)"
-                (removed)="removeCustomRestriction(restriction)">
+              <mat-chip-option
+                [selected]="isSelected(restriction)"
+                (removed)="formService.removeCustomRestriction(restriction)"
+                (selectionChange)="formService.toggleRestriction(restriction, $event.selected)"
+                >
                 {{restriction}}
                 <button matChipRemove [ariaLabel]="'Quitar ' + restriction">
                   <mat-icon>cancel</mat-icon>
@@ -54,7 +55,7 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit" [disabled]="isLoading()">Generar Receta</button>
-      <button mat-raised-button type="button" (click)="resetForm()" [disabled]="isLoading()">Reiniciar</button>
+      <!-- <button mat-raised-button type="button" (click)="resetForm()" [disabled]="isLoading()">Reiniciar</button> -->
     </mat-card-actions>
   </mat-card>
 </form>
