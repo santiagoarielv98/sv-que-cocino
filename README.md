@@ -1,59 +1,112 @@
-# SvQueCocino
+# ¿Qué Cocino? (SvQueCocino)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+Una aplicación web para generar recetas personalizadas basadas en los ingredientes que tengas disponibles, respetando restricciones dietéticas.
 
-## Development server
+## 🍳 Descripción del Proyecto
 
-To start a local development server, run:
+"¿Qué Cocino?" es una aplicación que utiliza inteligencia artificial para generar recetas de cocina basadas en los ingredientes que el usuario tiene a mano. Esta herramienta es perfecta para quienes quieren aprovechar al máximo los alimentos disponibles en su hogar, descubrir nuevas combinaciones culinarias, o simplemente encontrar inspiración para sus comidas diarias.
 
-```bash
-ng serve
-```
+## ✨ Características Principales
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Generación de recetas personalizadas**: Introduce los ingredientes que tienes disponibles y obtén recetas completas.
+- **Filtros para restricciones dietéticas**: Filtra recetas por restricciones como vegano, vegetariano, sin gluten, etc.
+- **Detalles completos**: Visualiza tiempo de preparación, cocción, dificultad, porciones y pasos detallados.
+- **Etiquetas de recetas**: Las recetas vienen con etiquetas para facilitar su categorización.
+- **Autenticación de usuarios**: Registro e inicio de sesión con correo electrónico o Google.
+- **Almacenamiento en la nube**: Las recetas generadas se guardan en Firestore para acceso futuro.
+- **Interfaz responsiva**: Diseño adaptable a diferentes dispositivos.
 
-## Code scaffolding
+## 🧰 Tecnologías Utilizadas
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Frontend**: Angular con componentes standalone y señales
+- **Diseño UI**: Angular Material
+- **Autenticación**: Firebase Authentication
+- **Base de datos**: Cloud Firestore
+- **API backend**: Servicios RESTful para generación de recetas
+- **Estilo**: CSS moderno con diseño responsivo
 
-```bash
-ng generate component component-name
-```
+## 🚀 Instalación y Uso
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Requisitos Previos
 
-```bash
-ng generate --help
-```
+- Node.js (versión 18 o superior)
+- Angular CLI
+- Una cuenta de Firebase para configuración del proyecto
 
-## Building
+### Configuración
 
-To build the project run:
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/santiagoarielv98/sv-que-cocino.git
+   cd sv-que-cocino
+   ```
 
-```bash
-ng build
-```
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+3. Configura las variables de entorno:
+   - Crea o modifica el archivo `src/environments/environment.ts` con tus credenciales de Firebase:
+   ```typescript
+   export const environment = {
+     apiUrl: '[URL de tu API]',
+     firebaseConfig: {
+       apiKey: '[Tu API Key]',
+       authDomain: '[Tu Auth Domain]',
+       projectId: '[Tu Project ID]',
+       storageBucket: '[Tu Storage Bucket]',
+       messagingSenderId: '[Tu Messaging Sender ID]',
+       appId: '[Tu App ID]',
+       measurementId: '[Tu Measurement ID]',
+     },
+   };
+   ```
 
-## Running unit tests
+4. Ejecuta el servidor de desarrollo:
+   ```bash
+   ng serve
+   ```
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+5. Abre tu navegador y visita `http://localhost:4200/`
 
-```bash
-ng test
-```
+## 📱 Uso de la Aplicación
 
-## Running end-to-end tests
+1. **Inicio de sesión**: Regístrate o inicia sesión para acceder a todas las funcionalidades.
+2. **Generación de recetas**:
+   - Ingresa los ingredientes que tienes disponibles separados por comas.
+   - Selecciona las restricciones dietéticas aplicables.
+   - Haz clic en "Generar Receta".
+3. **Exploración de recetas**:
+   - Navega por las recetas generadas previamente.
+   - Utiliza el botón "Ver receta completa" para visualizar todos los detalles.
+4. **Detalles de la receta**:
+   - Consulta información completa como ingredientes, pasos, tiempos y dificultad.
 
-For end-to-end (e2e) testing, run:
+## 👨‍💻 Características en Desarrollo
 
-```bash
-ng e2e
-```
+- Generación de imágenes de las recetas usando IA
+- Función para guardar recetas favoritas
+- Opción para compartir recetas en redes sociales
+- Filtros adicionales para búsqueda de recetas
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 📝 Licencia
 
-## Additional Resources
+Este proyecto es de uso personal.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 👨‍💻 Acerca del Desarrollador
+
+Desarrollador Full Stack especializado en React, TypeScript y NestJS, con una sólida experiencia en la creación de aplicaciones web. Actualmente estudiante de Desarrollo de Software en el Instituto Técnico Superior Leopoldo Marechal en Buenos Aires, Argentina.
+
+### Tecnologías:
+- **Frontend**: React, Angular, TypeScript
+- **Backend**: Node.js, Spring Boot, Laravel
+- **Bases de Datos**: MySQL, MongoDB, PostgreSQL
+- **Otros**: Docker, Linux, Firebase
+
+## 📧 Contacto
+
+- **Email**: santiagoarielv98@gmail.com
+- **LinkedIn**: [santiagoarielv](https://www.linkedin.com/in/santiagoarielv/)
+- **GitHub**: [santiagoarielv98](https://github.com/santiagoarielv98)
+- **Portfolio**: [Visitar Portfolio](https://portfolio-santiagoarielv98.vercel.app/)
