@@ -12,6 +12,7 @@ import { RecipeCardComponent } from '../recipe-card/recipe-card.component';
 })
 export class RecipeListComponent {
   private recipeDetailDialogStateService = inject(RecipeDetailDialogService);
+
   @Input() recipes: Recipe[] = [];
 
   openDetail(recipe: Recipe) {

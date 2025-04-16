@@ -12,12 +12,6 @@ export interface GenerateImageOptions {
   idea?: string;
 }
 
-export interface GenerateImageResponse {
-  base64: string;
-  mimeType: string;
-  uint8Array: Uint8Array;
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -29,9 +23,9 @@ export class ApiService {
     return this.http.post<Recipe>(`${this.apiUrl}/recipes`, recipe);
   }
 
-  generateImage(recipe: Recipe) {
-    return this.http
-      .post<GenerateImageResponse>(`${this.apiUrl}/image`, recipe)
-      .pipe();
+  generateImage(recipeId: string) {
+    return this.http.post(`${this.apiUrl}/recipes/image`, {
+      recipeId: recipeId,
+    });
   }
 }

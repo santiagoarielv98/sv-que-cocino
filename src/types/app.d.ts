@@ -10,5 +10,5 @@ export interface Recipe {
   steps: string[];
   restrictions: string[];
   tags: string[];
-  imageUrl?: string;
+  image?: string;
 }

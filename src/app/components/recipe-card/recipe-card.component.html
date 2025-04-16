@@ -1,14 +1,15 @@
 <mat-card class="recipe-card" appearance="outlined">
   <div class="recipe-image-container">
-    @if(recipe.imageUrl) {
-      <img mat-card-image [src]="recipe.imageUrl" alt="Foto de la receta">
+    @if(recipe.image) {
+    <img mat-card-image [src]="recipe.image" alt="Foto de la receta">
     } @else {
-      <div class="image-placeholder">
-        <button mat-raised-button color="primary" matTooltip="No disponible aún" [matTooltipPosition]="'above'">
-          <mat-icon>add_photo_alternate</mat-icon>
-          Generar Imagen
-        </button>
-      </div>
+    <div class="image-placeholder">
+      <button mat-raised-button color="primary" matTooltip="No disponible aún" [matTooltipPosition]="'above'"
+        [disabled]="isLoading()" (click)="generateImage()">
+        <mat-icon>add_photo_alternate</mat-icon>
+        Generar Imagen
+      </button>
+    </div>
     }
   </div>
   <div class="recipe-content">
@@ -18,15 +19,15 @@
 
     <mat-card-content>
       @if(recipe.description){
-        <p class="recipe-description">
-          {{recipe.description}}
-        </p>
+      <p class="recipe-description">
+        {{recipe.description}}
+      </p>
       }
 
       <div class="recipe-tags">
         <mat-chip-set aria-label="Etiquetas de la receta">
           @for(tag of recipe.tags; track tag){
-            <mat-chip color="primary" disableRipple>{{tag}}</mat-chip>
+          <mat-chip color="primary" disableRipple>{{tag}}</mat-chip>
           }
         </mat-chip-set>
       </div>
@@ -60,10 +61,10 @@
       <div class="dietary-restrictions">
         <mat-chip-set aria-label="Restricciones dietéticas">
           @for(restriction of recipe.restrictions; track restriction){
-            <mat-chip color="accent" disableRipple>
-              <mat-icon matChipAvatar>check_circle</mat-icon>
-              {{restriction}}
-            </mat-chip>
+          <mat-chip color="accent" disableRipple>
+            <mat-icon matChipAvatar>check_circle</mat-icon>
+            {{restriction}}
+          </mat-chip>
           }
         </mat-chip-set>
       </div>

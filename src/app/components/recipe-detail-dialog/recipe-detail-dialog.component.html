@@ -1,8 +1,8 @@
 @let recipe = detail();
 <mat-dialog-content class="recipe-content-scroll">
     <div class="recipe-header-container">
-        @if(recipe.imageUrl) {
-        <img [src]="recipe.imageUrl" [alt]="recipe.title" class="recipe-image">
+        @if(recipe.image) {
+        <img [src]="recipe.image" [alt]="recipe.title" class="recipe-image">
         } @else {
         <div class="image-placeholder">
             <mat-icon>image</mat-icon>
