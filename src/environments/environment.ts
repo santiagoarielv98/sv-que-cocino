@@ -1,4 +1,5 @@
 export const environment = {
+  useEmulators: false,
   apiUrl: 'https://example.com/api',
   firebaseConfig: {
     apiKey: 'API_KEY',

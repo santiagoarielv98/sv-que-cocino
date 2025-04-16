@@ -26,7 +26,7 @@ export class ApiService {
   private apiUrl = environment.apiUrl;
 
   generateRecipe(recipe: GenerateRecipeOptions) {
-    return this.http.post<Recipe>(`${this.apiUrl}/recipe`, recipe);
+    return this.http.post<Recipe>(`${this.apiUrl}/recipes`, recipe);
   }
 
   generateImage(recipe: Recipe) {
