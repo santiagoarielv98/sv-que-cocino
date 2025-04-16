@@ -13,12 +13,6 @@ export class RecipeFormService {
     restrictions: this.fb.array([]),
   });
 
-  constructor() {
-    this.recipeForm.valueChanges.subscribe((value) => {
-      console.log(value);
-    });
-  }
-
   customRestrictions = signal<string[]>([]);
 
   toggleRestriction(restriction: string, isSelected: boolean) {

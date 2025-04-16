@@ -15,7 +15,6 @@ export class RecipeListComponent {
   @Input() recipes: Recipe[] = [];
 
   openDetail(recipe: Recipe) {
-    console.log('Opening detail for recipe:', recipe);
     this.recipeDetailDialogStateService.openRecipeDetailDialog(recipe);
   }
 }
