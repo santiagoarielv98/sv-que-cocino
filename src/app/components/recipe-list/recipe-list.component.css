@@ -1,8 +1,12 @@
+.recipe-list-container {
+    padding: 16px;
+}
+
 .recipe-list-header {
     margin-bottom: 24px;
 }
 
-.recipe-grid {
+.recipe-list {
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -14,4 +18,23 @@
     padding: 32px;
     background-color: var(--mat-sys-on-secondary);
     border-radius: 8px;
+}
+
+.load-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+    padding: 16px;
+}
+
+.load-more-button {
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.spinner {
+    margin-right: 8px;
 }

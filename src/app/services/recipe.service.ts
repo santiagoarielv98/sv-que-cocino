@@ -1,5 +1,5 @@
-import { Injectable, inject } from '@angular/core';
-import type { CollectionReference, Query } from '@angular/fire/firestore';
+import { Injectable, inject, signal } from '@angular/core';
+import type { CollectionReference, DocumentData, Query } from '@angular/fire/firestore';
 import {
   Firestore,
   collection,
@@ -7,8 +7,9 @@ import {
   limit,
   orderBy,
   query,
+  startAfter,
 } from '@angular/fire/firestore';
-import type { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, switchMap } from 'rxjs';
 import type { Recipe } from '../../types/app';
 import type { RecipeGenerationPayload } from './api.service';
 import { RecipeApiService } from './api.service';
@@ -28,21 +29,58 @@ export class RecipeService {
     'recipes',
   );
 
-  private readonly recipeQuery: Query = query(
-    this.recipeCollection,
-    orderBy('createdAt', 'desc'),
-    limit(20),
+  private readonly pageSize = 10;
+  private readonly recipesPerPage = signal<number>(this.pageSize);
+  private readonly lastVisibleDocument = signal<DocumentData | null>(null);
+  private readonly loadingMore = signal<boolean>(false);
+
+  // BehaviorSubject para controlar el límite de recetas
+  private limitSubject = new BehaviorSubject<number>(this.pageSize);
+
+  /**
+   * Observable con las recetas, ordenadas por fecha de creación descendente
+   */
+  public readonly recipes$: Observable<Recipe[]> = this.limitSubject.pipe(
+    switchMap(currentLimit => {
+      const recipesQuery: Query = query(
+        this.recipeCollection,
+        orderBy('createdAt', 'desc'),
+        limit(currentLimit),
+      );
+      
+      return collectionData(recipesQuery, {
+        idField: 'id',
+      }) as Observable<Recipe[]>;
+    })
   );
 
   /**
-   * Observable con las últimas 20 recetas, ordenadas por fecha de creación descendente
+   * Indica si se están cargando más recetas
    */
-  public readonly recipes$: Observable<Recipe[]> = collectionData(
-    this.recipeQuery,
-    {
-      idField: 'id',
-    },
-  ) as Observable<Recipe[]>;
+  get isLoadingMore(): boolean {
+    return this.loadingMore();
+  }
+
+  /**
+   * Cantidad actual de recetas por página
+   */
+  get currentLimit(): number {
+    return this.recipesPerPage();
+  }
+
+  /**
+   * Carga más recetas incrementando el límite
+   */
+  loadMoreRecipes(): void {
+    this.loadingMore.set(true);
+    const newLimit = this.limitSubject.value + this.pageSize;
+    this.recipesPerPage.set(newLimit);
+    this.limitSubject.next(newLimit);
+    
+    setTimeout(() => {
+      this.loadingMore.set(false);
+    }, 300);
+  }
 
   /**
    * Solicita la generación de una nueva receta

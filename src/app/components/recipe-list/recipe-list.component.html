@@ -3,7 +3,7 @@
     <h2>Recetas Generadas</h2>
   </header>
 
-  <div class="recipe-grid">
+  <div class="recipe-list">
     @for (recipe of recipes; track recipe.id) {
     <app-recipe-card [recipe]="recipe" (viewRecipe)="openDetail($event)" />
     }
@@ -12,4 +12,22 @@
     <p class="no-recipes">No hay recetas para mostrar</p>
     }
   </div>
+
+  @if (recipes.length > 0) {
+  <div class="load-more-container">
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="loadMore()" 
+      [disabled]="isLoadingMore"
+      class="load-more-button"
+    >
+      @if (isLoadingMore) {
+      <mat-spinner diameter="20" class="spinner"></mat-spinner>
+      } @else {
+      <span>Cargar más recetas</span>
+      }
+    </button>
+  </div>
+  }
 </section>
