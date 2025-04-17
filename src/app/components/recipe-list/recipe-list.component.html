@@ -13,7 +13,7 @@
     }
   </div>
 
-  @if (recipes.length > 0) {
+  @if (recipes.length > 0 && hasMoreRecipes) {
   <div class="load-more-container">
     <button 
       mat-raised-button 
@@ -28,6 +28,12 @@
       <span>Cargar más recetas</span>
       }
     </button>
+  </div>
+  }
+  
+  @if (recipes.length > 0 && !hasMoreRecipes && !isLoadingMore) {
+  <div class="no-more-recipes">
+    <p>No hay más recetas disponibles</p>
   </div>
   }
 </section>

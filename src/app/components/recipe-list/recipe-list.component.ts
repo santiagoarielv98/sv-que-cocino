@@ -44,4 +44,11 @@ export class RecipeListComponent {
   get isLoadingMore(): boolean {
     return this.recipeService.isLoadingMore;
   }
+
+  /**
+   * Indica si hay más recetas disponibles para cargar
+   */
+  get hasMoreRecipes(): boolean {
+    return this.recipeService.hasMore;
+  }
 }
