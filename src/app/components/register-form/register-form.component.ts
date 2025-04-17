@@ -57,7 +57,7 @@ export class RegisterFormComponent {
   onSubmit(): void {
     if (this.registerForm.valid) {
       try {
-        this.authService.register(
+        this.authService.registerWithEmailAndPassword(
           this.registerForm.value.email as string,
           this.registerForm.value.password as string,
         );

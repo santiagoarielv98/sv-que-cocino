@@ -1,7 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import type { Recipe } from '../../../types/app';
-import { RecipeDetailDialogService } from '../../services/recipe-detail-dialog.service';
+import {  DialogService } from '../../services/recipe-detail-dialog.service';
 import { RecipeCardComponent } from '../recipe-card/recipe-card.component';
 
 @Component({
@@ -11,11 +11,11 @@ import { RecipeCardComponent } from '../recipe-card/recipe-card.component';
   styleUrls: ['./recipe-list.component.css'],
 })
 export class RecipeListComponent {
-  private recipeDetailDialogStateService = inject(RecipeDetailDialogService);
+  private dialogService = inject(DialogService);
 
   @Input() recipes: Recipe[] = [];
 
   openDetail(recipe: Recipe) {
-    this.recipeDetailDialogStateService.openRecipeDetailDialog(recipe);
+    this.dialogService.openRecipeDetail(recipe);
   }
 }

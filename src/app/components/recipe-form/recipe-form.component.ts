@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { RecipeFormService } from '../../services/recipe-form.service';
+import { RestrictionFormService } from '../../services/recipe-form.service';
 import { RecipeService } from '../../services/recipe.service';
 
 @Component({
@@ -30,7 +30,7 @@ import { RecipeService } from '../../services/recipe.service';
 })
 export class RecipeFormComponent {
   private recipeService = inject(RecipeService);
-  protected formService = inject(RecipeFormService);
+  protected formService = inject(RestrictionFormService);
 
   isLoading = signal(false);
   recipeForm = this.formService.form;
