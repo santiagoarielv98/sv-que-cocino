@@ -3,23 +3,23 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import type { Recipe } from '../../../types/app';
-import { DialogService } from '../../services/recipe-detail-dialog.service';
+import { RecipeDialogService } from '../../services/recipe-dialog.service';
 import { RecipeCardComponent } from '../recipe-card/recipe-card.component';
 import { RecipeService } from '../../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
   imports: [
-    MatListModule, 
-    RecipeCardComponent, 
+    MatListModule,
+    RecipeCardComponent,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css'],
 })
 export class RecipeListComponent {
-  private dialogService = inject(DialogService);
+  private dialogService = inject(RecipeDialogService);
   private recipeService = inject(RecipeService);
 
   @Input() recipes: Recipe[] = [];

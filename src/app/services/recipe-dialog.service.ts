@@ -18,7 +18,7 @@ export interface RecipeDialogConfig {
 @Injectable({
   providedIn: 'root',
 })
-export class DialogService {
+export class RecipeDialogService {
   private readonly dialog = inject(MatDialog);
 
   /**

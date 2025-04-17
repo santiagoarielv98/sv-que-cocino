@@ -73,12 +73,12 @@ export class RecipeFormService {
    */
   resetForm(): void {
     this.recipeForm.reset();
-    
+
     // Limpiar el array de restricciones
     while (this.restrictions.length > 0) {
       this.restrictions.removeAt(0);
     }
-    
+
     // Limpiar las restricciones personalizadas
     this.customRestrictions.set([]);
   }

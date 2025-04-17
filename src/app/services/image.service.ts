@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { catchError, finalize } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
-import { RecipeApiService } from './api.service';
+import { RecipeApiService } from './recipe-api.service';
 
 /**
  * Servicio para gestionar la generación de imágenes de recetas
@@ -16,7 +16,7 @@ export class ImageService {
    * Indica si está en proceso de generación de imagen
    */
   readonly isLoading = signal(false);
-  
+
   /**
    * Último error ocurrido durante la generación de imágenes
    */
@@ -37,7 +37,7 @@ export class ImageService {
           console.error('Error generating recipe image:', err);
           return EMPTY;
         }),
-        finalize(() => this.isLoading.set(false))
+        finalize(() => this.isLoading.set(false)),
       )
       .subscribe();
   }

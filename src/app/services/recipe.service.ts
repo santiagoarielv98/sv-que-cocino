@@ -1,5 +1,9 @@
 import { Injectable, inject, signal } from '@angular/core';
-import type { CollectionReference, DocumentData, Query } from '@angular/fire/firestore';
+import type {
+  CollectionReference,
+  DocumentData,
+  Query,
+} from '@angular/fire/firestore';
 import {
   Firestore,
   collection,
@@ -7,12 +11,12 @@ import {
   limit,
   orderBy,
   query,
-  startAfter,
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, switchMap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { BehaviorSubject, switchMap } from 'rxjs';
 import type { Recipe } from '../../types/app';
-import type { RecipeGenerationPayload } from './api.service';
-import { RecipeApiService } from './api.service';
+import type { RecipeGenerationPayload } from './recipe-api.service';
+import { RecipeApiService } from './recipe-api.service';
 
 /**
  * Servicio responsable de gestionar las recetas
@@ -23,7 +27,7 @@ import { RecipeApiService } from './api.service';
 export class RecipeService {
   private readonly firestore = inject(Firestore);
   private readonly recipeApi = inject(RecipeApiService);
-  
+
   private readonly recipeCollection: CollectionReference = collection(
     this.firestore,
     'recipes',
@@ -41,17 +45,17 @@ export class RecipeService {
    * Observable con las recetas, ordenadas por fecha de creación descendente
    */
   public readonly recipes$: Observable<Recipe[]> = this.limitSubject.pipe(
-    switchMap(currentLimit => {
+    switchMap((currentLimit) => {
       const recipesQuery: Query = query(
         this.recipeCollection,
         orderBy('createdAt', 'desc'),
         limit(currentLimit),
       );
-      
+
       return collectionData(recipesQuery, {
         idField: 'id',
       }) as Observable<Recipe[]>;
-    })
+    }),
   );
 
   /**
@@ -76,7 +80,7 @@ export class RecipeService {
     const newLimit = this.limitSubject.value + this.pageSize;
     this.recipesPerPage.set(newLimit);
     this.limitSubject.next(newLimit);
-    
+
     setTimeout(() => {
       this.loadingMore.set(false);
     }, 300);

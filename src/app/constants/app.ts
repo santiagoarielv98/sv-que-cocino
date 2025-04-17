@@ -15,4 +15,5 @@ export const DIETARY_RESTRICTIONS = {
   NUT_FREE: 'Sin frutos secos',
 } as const;
 
-export type DietaryRestrictionType = typeof DIETARY_RESTRICTIONS[keyof typeof DIETARY_RESTRICTIONS];
+export type DietaryRestrictionType =
+  (typeof DIETARY_RESTRICTIONS)[keyof typeof DIETARY_RESTRICTIONS];
