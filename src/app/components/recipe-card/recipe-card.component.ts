@@ -40,7 +40,7 @@ export class RecipeCardComponent {
   generateImage() {
     if (this.isLoading()) return;
     if (this.recipe.id) {
-      this.imageService.generateImage(this.recipe.id);
+      this.imageService.generateImageForRecipe(this.recipe.id);
     }
   }
 

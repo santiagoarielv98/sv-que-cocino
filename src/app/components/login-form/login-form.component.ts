@@ -41,7 +41,7 @@ export class LoginFormComponent {
   async onSubmit() {
     if (this.loginForm.valid) {
       try {
-        await this.authService.login(
+        await this.authService.loginWithEmailAndPassword(
           this.loginForm.value.email as string,
           this.loginForm.value.password as string,
         );
