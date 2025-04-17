@@ -1,9 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
-import type {
-  CollectionReference,
-  DocumentData,
-  Query,
-} from '@angular/fire/firestore';
+import type { CollectionReference, Query } from '@angular/fire/firestore';
 import {
   Firestore,
   collection,
@@ -14,7 +10,7 @@ import {
   query,
 } from '@angular/fire/firestore';
 import type { Observable } from 'rxjs';
-import { BehaviorSubject, switchMap, map, tap } from 'rxjs';
+import { BehaviorSubject, switchMap } from 'rxjs';
 import type { Recipe } from '../../types/app';
 import type { RecipeGenerationPayload } from './recipe-api.service';
 import { RecipeApiService } from './recipe-api.service';
@@ -46,9 +42,9 @@ export class RecipeService {
   constructor() {
     // Obtener el total de recetas disponibles
     this.getTotalRecipeCount();
-    
+
     // Escuchar cambios en la cantidad de recetas cargadas para actualizar hasMoreRecipes
-    this.recipes$.subscribe(recipes => {
+    this.recipes$.subscribe((recipes) => {
       this.hasMoreRecipes.set(recipes.length < this.totalRecipes());
     });
   }
@@ -114,7 +110,7 @@ export class RecipeService {
     if (!this.hasMoreRecipes()) {
       return;
     }
-    
+
     this.loadingMore.set(true);
     const newLimit = this.limitSubject.value + this.pageSize;
     this.recipesPerPage.set(newLimit);
