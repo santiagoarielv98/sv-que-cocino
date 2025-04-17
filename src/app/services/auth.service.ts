@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import type { User } from '@angular/fire/auth';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -8,28 +9,57 @@ import {
   signOut,
   user,
 } from '@angular/fire/auth';
+import type { Observable } from 'rxjs';
 
+/**
+ * Servicio responsable de la autenticación de usuarios
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private auth = inject(Auth);
-  private googleProvider = new GoogleAuthProvider();
-  user$ = user(this.auth);
+  private readonly auth = inject(Auth);
+  private readonly googleProvider = new GoogleAuthProvider();
 
-  async login(email: string, password: string) {
+  /**
+   * Observable del usuario autenticado actual
+   */
+  readonly user$: Observable<User | null> = user(this.auth);
+
+  /**
+   * Iniciar sesión con email y contraseña
+   * @throws Error si las credenciales son inválidas
+   */
+  async loginWithEmailAndPassword(
+    email: string,
+    password: string,
+  ): Promise<void> {
     await signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  async loginWithGoogle() {
+  /**
+   * Iniciar sesión con Google
+   * @throws Error si la autenticación con Google falla
+   */
+  async loginWithGoogle(): Promise<void> {
     await signInWithPopup(this.auth, this.googleProvider);
   }
 
-  async register(email: string, password: string) {
+  /**
+   * Registrar un nuevo usuario con email y contraseña
+   * @throws Error si el registro falla
+   */
+  async registerWithEmailAndPassword(
+    email: string,
+    password: string,
+  ): Promise<void> {
     await createUserWithEmailAndPassword(this.auth, email, password);
   }
 
-  async logout() {
+  /**
+   * Cerrar sesión del usuario actual
+   */
+  async logout(): Promise<void> {
     await signOut(this.auth);
   }
 }

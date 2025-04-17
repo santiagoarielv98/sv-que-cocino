@@ -1,93 +1,148 @@
 import { inject, Injectable, signal } from '@angular/core';
-import type { FormArray } from '@angular/forms';
+import type { FormArray, FormGroup, AbstractControl } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ingredientValidator } from '../validators/ingredient.directive';
 
+/**
+ * Tipos de restricciones dietéticas predefinidas
+ */
+export enum DietaryRestriction {
+  GLUTEN_FREE = 'Sin TACC',
+  VEGAN = 'Vegano',
+  VEGETARIAN = 'Vegetariano',
+  LACTOSE_FREE = 'Sin lactosa',
+  NUT_FREE = 'Sin frutos secos',
+}
+
+/**
+ * Servicio para gestionar el formulario de recetas y sus restricciones
+ */
 @Injectable({
   providedIn: 'root',
 })
-export class RecipeFormService {
-  private fb = inject(FormBuilder);
-  private recipeForm = this.fb.group({
+export class RestrictionFormService {
+  private readonly formBuilder = inject(FormBuilder);
+
+  /**
+   * Restricciones personalizadas agregadas por el usuario
+   */
+  readonly customRestrictions = signal<string[]>([]);
+
+  /**
+   * Formulario para ingredientes y restricciones
+   */
+  private readonly recipeForm: FormGroup = this.formBuilder.group({
     ingredients: ['', [ingredientValidator()]],
-    restrictions: this.fb.array([]),
+    restrictions: this.formBuilder.array([]),
   });
 
-  customRestrictions = signal<string[]>([]);
+  /**
+   * Activa/desactiva una restricción en el formulario
+   */
+  toggleRestriction(restriction: string, isSelected: boolean): void {
+    const selectedRestrictions = this.getSelectedRestrictions();
 
-  toggleRestriction(restriction: string, isSelected: boolean) {
-    const currentSelections = this.restrictions.controls.map(
-      (control) => control.value,
-    );
-    if (isSelected) {
-      if (!currentSelections.includes(restriction)) {
-        this.restrictions.push(this.fb.control(restriction));
-      }
-    } else {
-      const index = currentSelections.indexOf(restriction);
-      if (index !== -1) {
-        this.restrictions.removeAt(index);
-      }
+    if (isSelected && !selectedRestrictions.includes(restriction)) {
+      this.addRestrictionToForm(restriction);
+    } else if (!isSelected) {
+      this.removeRestrictionFromForm(restriction);
     }
   }
 
-  addCustomRestriction(restriction: string) {
-    const value = restriction.trim();
-    if (value.length < 2) return;
+  /**
+   * Agrega una restricción personalizada
+   * @returns true si fue agregada, false si ya existía
+   */
+  addCustomRestriction(restriction: string): boolean {
+    const trimmedValue = restriction.trim();
+    if (trimmedValue.length < 2) return false;
 
-    const allRestrictions = this.allRestrictions;
-
-    if (!allRestrictions.includes(value.toLowerCase())) {
-      this.customRestrictions.update((prev) => [...prev, restriction]);
-      this.restrictions.push(this.fb.control(restriction));
-      return true;
+    const normalizedValue = trimmedValue.toLowerCase();
+    if (this.getAllRestrictions().includes(normalizedValue)) {
+      return false;
     }
-    return false;
+
+    this.customRestrictions.update((prev) => [...prev, trimmedValue]);
+    this.addRestrictionToForm(trimmedValue);
+    return true;
   }
 
-  removeCustomRestriction(restriction: string) {
+  /**
+   * Elimina una restricción personalizada
+   */
+  removeCustomRestriction(restriction: string): void {
     this.customRestrictions.update((prev) =>
       prev.filter((item) => item !== restriction),
     );
-    const index = this.restrictions.controls.findIndex(
-      (control) => control.value === restriction,
-    );
-    if (index !== -1) {
-      this.restrictions.removeAt(index);
-    }
+
+    this.removeRestrictionFromForm(restriction);
   }
 
-  resetForm() {
+  /**
+   * Reinicia el formulario a su estado inicial
+   */
+  resetForm(): void {
     this.recipeForm.reset();
   }
 
-  get allRestrictions() {
-    const customRestrictions = this.customRestrictions();
-    const allRestrictions = [
-      ...customRestrictions,
-      ...this.defaultRestrictions,
-    ].map((restriction) => restriction.trim().toLowerCase());
-    return allRestrictions;
-  }
-
-  get form() {
+  /**
+   * Obtiene el formulario completo
+   */
+  get form(): FormGroup {
     return this.recipeForm;
   }
-  get ingredients() {
+
+  /**
+   * Obtiene el control de ingredientes
+   */
+  get ingredients(): AbstractControl {
     return this.recipeForm.get('ingredients')!;
   }
 
-  get restrictions() {
-    return this.recipeForm.get('restrictions')! as FormArray;
+  /**
+   * Obtiene el array de restricciones
+   */
+  get restrictions(): FormArray {
+    return this.recipeForm.get('restrictions') as FormArray;
   }
 
-  get defaultRestrictions() {
-    return [
-      'Sin TACC',
-      'Vegano',
-      'Vegetariano',
-      'Sin lactosa',
-      'Sin frutos secos',
-    ];
+  /**
+   * Obtiene las restricciones predefinidas del sistema
+   */
+  get defaultRestrictions(): string[] {
+    return Object.values(DietaryRestriction);
+  }
+
+  /**
+   * Obtiene todas las restricciones (predefinidas y personalizadas)
+   */
+  private getAllRestrictions(): string[] {
+    return [...this.customRestrictions(), ...this.defaultRestrictions].map(
+      (restriction) => restriction.trim().toLowerCase(),
+    );
+  }
+
+  /**
+   * Obtiene las restricciones seleccionadas actualmente
+   */
+  private getSelectedRestrictions(): string[] {
+    return this.restrictions.controls.map((control) => control.value);
+  }
+
+  /**
+   * Añade una restricción al FormArray
+   */
+  private addRestrictionToForm(restriction: string): void {
+    this.restrictions.push(this.formBuilder.control(restriction));
+  }
+
+  /**
+   * Elimina una restricción del FormArray
+   */
+  private removeRestrictionFromForm(restriction: string): void {
+    const index = this.getSelectedRestrictions().indexOf(restriction);
+    if (index !== -1) {
+      this.restrictions.removeAt(index);
+    }
   }
 }

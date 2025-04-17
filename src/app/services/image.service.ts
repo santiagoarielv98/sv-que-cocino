@@ -1,22 +1,30 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { ApiService } from './api.service';
+import { finalize } from 'rxjs/operators';
+import { HttpClientService } from './api.service';
 
+/**
+ * Servicio para gestionar la generación de imágenes de recetas
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class ImageService {
-  private apiService = inject(ApiService);
-  isLoading = signal(false);
+  private readonly httpClient = inject(HttpClientService);
 
-  generateImage(recipeId: string) {
+  /**
+   * Indica si está en proceso de generación de imagen
+   */
+  readonly isLoading = signal(false);
+
+  /**
+   * Solicita la generación de una nueva imagen para una receta
+   */
+  generateImageForRecipe(recipeId: string): void {
     this.isLoading.set(true);
-    this.apiService.generateImage(recipeId).subscribe({
-      next: () => {
-        this.isLoading.set(false);
-      },
-      error: () => {
-        this.isLoading.set(false);
-      },
-    });
+
+    this.httpClient
+      .createRecipeImage(recipeId)
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe();
   }
 }
