@@ -11,14 +11,18 @@ import {
 import type { Observable } from 'rxjs';
 import type { Recipe } from '../../types/app';
 import type { RecipeGenerationPayload } from './api.service';
-import { HttpClientService } from './api.service';
+import { RecipeApiService } from './api.service';
 
+/**
+ * Servicio responsable de gestionar las recetas
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeService {
   private readonly firestore = inject(Firestore);
-  private readonly httpClient = inject(HttpClientService);
+  private readonly recipeApi = inject(RecipeApiService);
+  
   private readonly recipeCollection: CollectionReference = collection(
     this.firestore,
     'recipes',
@@ -44,6 +48,6 @@ export class RecipeService {
    * Solicita la generación de una nueva receta
    */
   generateRecipe(options: RecipeGenerationPayload): Observable<Recipe> {
-    return this.httpClient.createRecipe(options);
+    return this.recipeApi.createRecipe(options);
   }
 }

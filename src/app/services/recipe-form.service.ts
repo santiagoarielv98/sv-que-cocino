@@ -1,18 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
 import type { FormArray, FormGroup, AbstractControl } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
+import { DIETARY_RESTRICTIONS } from '../constants/app';
 import { ingredientValidator } from '../validators/ingredient.directive';
-
-/**
- * Tipos de restricciones dietéticas predefinidas
- */
-export enum DietaryRestriction {
-  GLUTEN_FREE = 'Sin TACC',
-  VEGAN = 'Vegano',
-  VEGETARIAN = 'Vegetariano',
-  LACTOSE_FREE = 'Sin lactosa',
-  NUT_FREE = 'Sin frutos secos',
-}
 
 /**
  * Servicio para gestionar el formulario de recetas y sus restricciones
@@ -20,7 +10,7 @@ export enum DietaryRestriction {
 @Injectable({
   providedIn: 'root',
 })
-export class RestrictionFormService {
+export class RecipeFormService {
   private readonly formBuilder = inject(FormBuilder);
 
   /**
@@ -83,6 +73,14 @@ export class RestrictionFormService {
    */
   resetForm(): void {
     this.recipeForm.reset();
+    
+    // Limpiar el array de restricciones
+    while (this.restrictions.length > 0) {
+      this.restrictions.removeAt(0);
+    }
+    
+    // Limpiar las restricciones personalizadas
+    this.customRestrictions.set([]);
   }
 
   /**
@@ -110,7 +108,7 @@ export class RestrictionFormService {
    * Obtiene las restricciones predefinidas del sistema
    */
   get defaultRestrictions(): string[] {
-    return Object.values(DietaryRestriction);
+    return Object.values(DIETARY_RESTRICTIONS);
   }
 
   /**

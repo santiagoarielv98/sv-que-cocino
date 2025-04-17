@@ -19,19 +19,25 @@ export interface ImageGenerationResponse {
 }
 
 /**
- * Servicio responsable de comunicarse con la API externa
+ * Servicio responsable de comunicarse con la API externa de recetas
  */
 @Injectable({
   providedIn: 'root',
 })
-export class HttpClientService {
+export class RecipeApiService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = environment.apiUrl;
 
+  /**
+   * Solicita la generación de una receta a partir de ingredientes y restricciones
+   */
   createRecipe(payload: RecipeGenerationPayload): Observable<Recipe> {
     return this.http.post<Recipe>(`${this.baseUrl}/recipes`, payload);
   }
 
+  /**
+   * Solicita la generación de una imagen para una receta específica
+   */
   createRecipeImage(recipeId: string): Observable<ImageGenerationResponse> {
     const payload: ImageGenerationPayload = { recipeId };
     return this.http.post<ImageGenerationResponse>(
