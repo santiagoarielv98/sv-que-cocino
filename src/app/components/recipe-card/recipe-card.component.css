@@ -78,3 +78,16 @@ mat-card-actions {
         grid-template-columns: 1fr;
     }
 }
+
+/* Chip truncation styles */
+.chip-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.chip-truncate-wide {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

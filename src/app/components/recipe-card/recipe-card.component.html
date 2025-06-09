@@ -27,7 +27,7 @@
       <div class="recipe-tags">
         <mat-chip-set aria-label="Etiquetas de la receta">
           @for(tag of recipe.tags; track tag){
-          <mat-chip color="primary" disableRipple>{{tag}}</mat-chip>
+          <mat-chip color="primary" disableRipple class="chip-truncate">{{tag}}</mat-chip>
           }
         </mat-chip-set>
       </div>
@@ -61,7 +61,7 @@
       <div class="dietary-restrictions">
         <mat-chip-set aria-label="Restricciones dietéticas">
           @for(restriction of recipe.restrictions; track restriction){
-          <mat-chip color="accent" disableRipple>
+          <mat-chip color="accent" disableRipple class="chip-truncate-wide">
             <mat-icon matChipAvatar>check_circle</mat-icon>
             {{restriction}}
           </mat-chip>
